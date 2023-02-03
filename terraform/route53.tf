@@ -5,3 +5,4 @@ module "dns" {
   alb_dns_name = module.alb.alb_dns_name
   application_subdomain = var.application_subdomain
   domain_name = var.domain_name
+}
