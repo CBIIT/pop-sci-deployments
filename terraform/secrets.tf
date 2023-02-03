@@ -33,7 +33,7 @@ module "deepmerge" {
 }
 
 module "secrets" {
-  source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/secrets?ref=terraform_modules"
+  source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/secrets?ref=v1.0"
   app                           = var.stack_name
   secret_values                 = module.deepmerge.merged
 }
