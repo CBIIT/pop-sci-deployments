@@ -9,6 +9,8 @@ locals {
         sumo_collector_token_frontend = module.monitoring.sumo_source_urls.frontend[0]
         sumo_collector_token_backend  = module.monitoring.sumo_source_urls.backend[0]
         sumo_collector_token_files    = module.monitoring.sumo_source_urls.files[0]
+        sumo_collector_token_auth     = module.monitoring.sumo_source_urls.auth[0]
+        sumo_collector_token_user     = module.monitoring.sumo_source_urls.user[0]
       }
     }
   }
