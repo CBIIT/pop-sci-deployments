@@ -186,7 +186,7 @@ variable "public_ssh_key_ssm_parameter_name" {
 }
 variable "create_db_instance" {
   description = "set this value if you want create db instance"
-  default = false
+  default = true
   type = bool
 }
 

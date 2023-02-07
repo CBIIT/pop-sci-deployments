@@ -11,4 +11,3 @@ output "db_password" {
   value = module.aurora.*.db_password
   sensitive = true
 }
-
