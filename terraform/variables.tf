@@ -260,8 +260,8 @@ variable "db_engine_version" {
   type        = string
   default     = "5.6.10a"
 }
-variable "db_engine_version" {
-  description = "aurora database engine version."
+variable "db_version" {
+  description = "aurora database version."
   type        = string
   default     = "v2"
 }
