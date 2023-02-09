@@ -17,6 +17,14 @@ locals {
     }
   }
 
+  variable "secret_values" {
+  type = map(object({
+    secretKey               = string
+    secretValue             = map(string)
+    description             = string
+  }))
+}
+
 }
 module "deepmerge" {
   source  = "Invicton-Labs/deepmerge/null"
