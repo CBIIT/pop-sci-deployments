@@ -263,7 +263,7 @@ variable "db_engine_version" {
 variable "db_version" {
   description = "aurora database version."
   type        = string
-  default     = "v2"
+  default     = "2.03.2"
 }
 variable "db_engine_type" {
   description = "Aurora database engine type"
