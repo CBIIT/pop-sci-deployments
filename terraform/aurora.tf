@@ -12,5 +12,5 @@ module "aurora" {
   allowed_ip_blocks = var.allowed_ip_blocks
   db_subnet_ids = var.private_subnet_ids 
   database_name = var.database_name
-  version = "2.03.2"
+  version = 2.03.2
 }
