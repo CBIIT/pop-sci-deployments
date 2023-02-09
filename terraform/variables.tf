@@ -258,7 +258,7 @@ variable "db_engine_mode" {
 variable "db_engine_version" {
   description = "aurora database engine version."
   type        = string
-  default     = "5.7.12"
+  default     = "5.6.10a"
 }
 variable "db_engine_type" {
   description = "Aurora database engine type"
@@ -284,7 +284,7 @@ variable "database_name" {
 variable "create_aurora_rds" {
   description = "create rds or not"
   type = bool
-  default = false
+  default = true
 }
 variable "create_cloudfront" {
   description = "create cloudfront or not"
