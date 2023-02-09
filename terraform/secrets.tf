@@ -21,6 +21,7 @@ locals {
 
 #secrets
 variable "secret_values" {
+   app = {
   type = map(object({
     description = string
     secretKey = string
@@ -31,6 +32,7 @@ variable "secret_values" {
     indexd_url = string
     sumo_collector_endpoint = string
   }))
+  }
 }
 module "deepmerge" {
   source  = "Invicton-Labs/deepmerge/null"
