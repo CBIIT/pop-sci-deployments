@@ -16,7 +16,7 @@ locals {
       }
     }
   }
-
+}
   variable "secret_values" {
   type = map(object({
     secretKey               = string
@@ -25,7 +25,7 @@ locals {
   }))
 }
 
-}
+
 module "deepmerge" {
   source  = "Invicton-Labs/deepmerge/null"
   maps = [
@@ -39,4 +39,3 @@ module "secrets" {
   app                           = var.stack_name
   secret_values                 = module.deepmerge.merged
 }
-#secrets
