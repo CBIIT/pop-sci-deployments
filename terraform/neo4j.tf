@@ -18,7 +18,7 @@ resource "aws_security_group_rule" "neo4j_http" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_http
   cidr_blocks = var.allowed_ip_blocks
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 
@@ -28,7 +28,7 @@ resource "aws_security_group_rule" "bastion_host_ssh" {
   protocol = local.tcp_protocol
   to_port = local.bastion_port
   source_security_group_id = var.bastion_host_security_group_id
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 
@@ -38,7 +38,7 @@ resource "aws_security_group_rule" "neo4j_https" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_https
   cidr_blocks = var.allowed_ip_blocks
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 
@@ -48,7 +48,7 @@ resource "aws_security_group_rule" "neo4j_bolt" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_bolt
   cidr_blocks = var.allowed_ip_blocks
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 
@@ -58,7 +58,7 @@ resource "aws_security_group_rule" "neo4j_outbound" {
   protocol = local.any_protocol
   to_port = local.any_port
   cidr_blocks = local.all_ips
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "egress"
 }
 
@@ -68,7 +68,7 @@ resource "aws_security_group_rule" "dataloader_http_inbound" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_http
   source_security_group_id = var.bastion_host_security_group_id
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 
@@ -78,7 +78,7 @@ resource "aws_security_group_rule" "dataloader_bolt_inbound" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_bolt
   source_security_group_id = var.bastion_host_security_group_id
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 
@@ -88,7 +88,7 @@ resource "aws_security_group_rule" "katalon_bolt_inbound" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_bolt
   source_security_group_id = var.katalon_security_group_id
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
 #create katalon http ingress rule
@@ -97,6 +97,6 @@ resource "aws_security_group_rule" "katalon_http_inbound" {
   protocol = local.tcp_protocol
   to_port = local.neo4j_http
   source_security_group_id = var.katalon_security_group_id
-  security_group_id = module.neo4j[count.index].db_security_group_id
+  security_group_id = module.neo4j.db_security_group_id
   type = "ingress"
 }
