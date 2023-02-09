@@ -14,7 +14,6 @@ module "neo4j" {
 
 #create neo4j http ingress rule
 resource "aws_security_group_rule" "neo4j_http" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_http
   protocol = local.tcp_protocol
   to_port = local.neo4j_http
@@ -25,7 +24,6 @@ resource "aws_security_group_rule" "neo4j_http" {
 
 #create bastion host ingress rule
 resource "aws_security_group_rule" "bastion_host_ssh" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.bastion_port
   protocol = local.tcp_protocol
   to_port = local.bastion_port
@@ -36,7 +34,6 @@ resource "aws_security_group_rule" "bastion_host_ssh" {
 
 #create neo4j https ingress rule
 resource "aws_security_group_rule" "neo4j_https" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_https
   protocol = local.tcp_protocol
   to_port = local.neo4j_https
@@ -47,7 +44,6 @@ resource "aws_security_group_rule" "neo4j_https" {
 
 #create neo4j bolt https ingress rule
 resource "aws_security_group_rule" "neo4j_bolt" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_bolt
   protocol = local.tcp_protocol
   to_port = local.neo4j_bolt
@@ -58,7 +54,6 @@ resource "aws_security_group_rule" "neo4j_bolt" {
 
 #create neo4j egress rule
 resource "aws_security_group_rule" "neo4j_outbound" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.any_port
   protocol = local.any_protocol
   to_port = local.any_port
@@ -69,7 +64,6 @@ resource "aws_security_group_rule" "neo4j_outbound" {
 
 #create dataloader http ingress rule
 resource "aws_security_group_rule" "dataloader_http_inbound" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_http
   protocol = local.tcp_protocol
   to_port = local.neo4j_http
@@ -80,7 +74,6 @@ resource "aws_security_group_rule" "dataloader_http_inbound" {
 
 #create dataloader bolt ingress rule
 resource "aws_security_group_rule" "dataloader_bolt_inbound" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_bolt
   protocol = local.tcp_protocol
   to_port = local.neo4j_bolt
@@ -91,7 +84,6 @@ resource "aws_security_group_rule" "dataloader_bolt_inbound" {
 
 #create katalon bolt ingress rule
 resource "aws_security_group_rule" "katalon_bolt_inbound" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_bolt
   protocol = local.tcp_protocol
   to_port = local.neo4j_bolt
@@ -101,7 +93,6 @@ resource "aws_security_group_rule" "katalon_bolt_inbound" {
 }
 #create katalon http ingress rule
 resource "aws_security_group_rule" "katalon_http_inbound" {
-  count = var.create_db_instance ? 1 : 0
   from_port = local.neo4j_http
   protocol = local.tcp_protocol
   to_port = local.neo4j_http
