@@ -31,3 +31,4 @@ module "secrets" {
   app                           = var.stack_name
   secret_values                 = module.deepmerge.merged
 }
+#secrets

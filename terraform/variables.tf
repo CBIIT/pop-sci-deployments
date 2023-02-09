@@ -324,3 +324,16 @@ variable "create_files_bucket" {
   type = bool
   default = false
 }
+variable "secret_values" {
+  type = map(object({
+    app                     = map(string)
+    description             = string
+    secretKey               = string
+    secretValue             = map(string)
+    neo4j_user              = string
+    neo4j_password          = string
+    neo4j_ip                = string
+    indexd_url              = string
+    sumo_collector_endpoint = string
+  }))
+}
