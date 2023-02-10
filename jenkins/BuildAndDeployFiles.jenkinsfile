@@ -4,6 +4,7 @@ buildAndDeploy(
     parameterName: "FilesTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-files",
     checkoutDirectory: "popsci-files",
+    playbookRepoBranch: "main",
     buildPlaybook: "ansible/playbooks/build-files-microservice.yml",
     deployPlaybook: "ansible/playbooks/deploy-files-microservice.yml",
     inventory: "ansible/hosts",
