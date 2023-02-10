@@ -258,7 +258,7 @@ variable "db_engine_mode" {
 variable "db_engine_version" {
   description = "aurora database engine version."
   type        = string
-  default     = "10.12"
+  default     = "5.6.10a"
 }
 variable "db_engine_type" {
   description = "Aurora database engine type"
