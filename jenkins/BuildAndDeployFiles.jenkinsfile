@@ -3,7 +3,7 @@ buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "FilesTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-files",
-    checkoutDirectory: "bento-files",
+    checkoutDirectory: "popsci-files",
     buildPlaybook: "ansible/build-files-microservice.yml",
     deployPlaybook: "ansible/deploy-files-microservice.yml",
     inventory: "ansible/hosts",

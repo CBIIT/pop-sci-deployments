@@ -1,4 +1,4 @@
-- name: build backend microservice
+- name: build users microservice
   hosts: all
   connection: local
   gather_facts: no
