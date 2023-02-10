@@ -1,0 +1,35 @@
+[cicd]
+localhost
+
+[loader]
+localhost 
+
+[bento]
+localhost
+
+[ppdc-otg]
+localhost
+
+[ppdc-otp]
+localhost
+
+[ccdi]
+localhost
+
+[gke]
+localhost
+
+[docker]
+localhost
+
+[ccdc]
+localhost
+
+[OpenPedCan-api]
+localhost
+
+[neo4j]
+localhost ansible_python_interpreter=/bin/python2
+
+[all]
+localhost ansible_python_interpreter=/usr/bin/python3
