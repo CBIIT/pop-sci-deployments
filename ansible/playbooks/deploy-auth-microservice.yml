@@ -38,8 +38,8 @@
         email_user: "{{ lookup('amazon.aws.aws_secret', 'smtp.email_user', nested=true, region='us-east-1' ) }}"
         email_password: "{{ lookup('amazon.aws.aws_secret', 'smtp.email_password', nested=true, region='us-east-1' ) }}"
         #mysql
-        aurora_cluster_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.aurora_cluster_endpoint', nested=true, region='us-east-1' ) }}"
-        aurora_db_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.aurora_db_password', nested=true, region='us-east-1' ) }}"
+        aurora_cluster_endpoint: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.aurora_cluster_endpoint', nested=true, region='us-east-1') }}"
+        aurora_db_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.aurora_db_password', nested=true, region='us-east-1') }}"
         #mysql_host: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.mysql_host', nested=true, region='us-east-1' ) }}"
         #mysql_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.mysql_user', nested=true, region='us-east-1' ) }}"
         #mysql_password: "{{ lookup('amazon.aws.aws_secret', 'bento/{{project_name}}/{{tier}}.mysql_password', nested=true, region='us-east-1' ) }}"
