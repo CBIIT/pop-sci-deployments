@@ -14,9 +14,9 @@ services:
     image: 2.2.0.35
     buildNumber: '35'
   files:
-    version: main.14
-    image: main.14
-    buildNumber: '14'
+    version: 1.4.0.15
+    image: 1.4.0.15
+    buildNumber: '15'
   users:
     version: 1.2.0.45
     image: 1.2.0.45
