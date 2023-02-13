@@ -22,7 +22,7 @@
         region: us-east-1
 
     #deploy backend
-    - name: deploy stage for backend microservice
+    - name: deploy stage for auth microservice
       include_role:
         name: bento.common.ecs
       vars:
