@@ -15,8 +15,6 @@ locals {
         #aurora_db_password            = nonsensitive(module.aurora.db_password)
         aurora_mysql_host             = module.aurora.mysql_host
         aurora_mysql_password         = nonsensitive(module.aurora.mysql_password)
-        mysql_user                    = bento
-        mysql_database                = bento_seesion
       }
     }
   }
