@@ -21,7 +21,7 @@
         region: us-east-1
 
     #build backend
-    - name: build {{project_name}} users microservice
+    - name: build stage for users microservice
       include_role:
         name: bento.common.build_users
         ansible_python_interpreter: /usr/bin/python3
