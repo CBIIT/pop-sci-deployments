@@ -14,11 +14,11 @@ buildAndDeploy(
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url",
     appVersionName: "USERS_VERSION",
-    deploymentRepoUrl: "https://github.com/CBIIT/popsci-deployments",
-    deploymentCheckoutDirectory: "popsci-deployments",
-    deploymentFile: "bento-deployments/deployments.yaml",
+    deploymentRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
+    deploymentCheckoutDirectory: "pop-sci-deployments",
+    deploymentFile: "pop-sci-deployments/deployments.yaml",
     extraAnsibleVars: [
-        subdomain: "bento",
+        subdomain: "popsci",
         domain_name: "bento-tools.org"
     ],
     service: "users"
