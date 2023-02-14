@@ -11,10 +11,8 @@ locals {
         sumo_collector_token_files    = module.monitoring.sumo_source_urls.files[0]
         sumo_collector_token_auth     = module.monitoring.sumo_source_urls.auth[0]
         sumo_collector_token_user     = module.monitoring.sumo_source_urls.users[0]
-        #aurora_cluster_endpoint       = module.aurora.cluster_endpoint
-        #aurora_db_password            = nonsensitive(module.aurora.db_password)
-        aurora_mysql_host             = module.aurora.mysql_host
-        aurora_mysql_password         = nonsensitive(module.aurora.mysql_password)
+        aurora_cluster_endpoint       = module.aurora.cluster_endpoint
+        aurora_db_password            = nonsensitive(module.aurora.db_password)
       }
     }
   }
