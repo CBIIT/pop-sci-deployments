@@ -17,5 +17,5 @@ output "mysql_host" {
 }
 output "mysql_password" {
  value = module.aurora.*.mysql_password
-  sensitive = false
+  sensitive = true
 }
