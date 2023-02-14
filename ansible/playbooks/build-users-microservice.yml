@@ -23,8 +23,7 @@
     #build backend
     - name: build {{project_name}} users microservice
       include_role:
-        name: bento.common.build_auth
-      vars:
+        name: bento.common.build_users
         ansible_python_interpreter: /usr/bin/python3
         users_version: "{{ lookup('env','USERS_VERSION') }}"
         workspace: "{{ lookup('env','WORKSPACE') }}"
