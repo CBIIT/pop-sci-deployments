@@ -3,7 +3,7 @@ buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-RI-backend",
-    checkoutDirectory: "bento-files",
+    checkoutDirectory: "bento-backend",
 	playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     playbookRepoBranch: "main",
     buildPlaybook: "ansible/build-bento-reference-microservice.yml",
