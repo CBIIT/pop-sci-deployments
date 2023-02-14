@@ -21,7 +21,7 @@
         region: us-east-1
 
     #deploy files
-    - name: deploy stage for {{ project }} files
+    - name: deploy stage for {{ project_name }} files
       include_role:
         name: bento.common.ecs
       vars:

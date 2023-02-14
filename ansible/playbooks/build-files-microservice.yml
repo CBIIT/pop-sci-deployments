@@ -21,7 +21,7 @@
         region: us-east-1
 
     #build files
-    - name: build stage for files microservice
+    - name: build stage for {{ project_name }} files microservice
       include_role:
         name: bento.common.build_files
       vars:
