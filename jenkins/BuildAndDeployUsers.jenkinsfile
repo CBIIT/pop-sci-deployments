@@ -3,7 +3,7 @@ buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "UsersTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-users",
-    checkoutDirectory: "bento-users",
+    checkoutDirectory: "popsci-users",
     playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     playbookRepoBranch: "main",
     buildPlaybook: "ansible/playbooks/build-users-microservice.yml",
@@ -20,7 +20,7 @@ buildAndDeploy(
     extraAnsibleVars: [
         subdomain: "popsci",
         domain_name: "bento-tools.org",
-		checkout_directory: "bento-users"
+		checkout_directory: "popsci-users"
     ],
     service: "users"
 )
