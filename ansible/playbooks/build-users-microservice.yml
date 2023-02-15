@@ -13,6 +13,7 @@
         - amazon.aws
         - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,v1.0
+
     #docker login
     - name: docker login
       include_role:
@@ -20,16 +21,16 @@
       vars:
         region: us-east-1
 
-    #build backend
+    #build users
     - name: build {{project_name}} users microservice
       include_role:
-        name: bento.common.build_users
+        name: bento.common.build_auth
+      vars:
         ansible_python_interpreter: /usr/bin/python3
-        users_version: "{{ lookup('env','USERS_VERSION') }}"
         workspace: "{{ lookup('env','WORKSPACE') }}"
         build_number: "{{ lookup('env','BUILD_NUMBER')}}"
         project_name: "{{ project_name }}"
-        image_version: "{{ users_version }}"
+        image_version: "{{ lookup('env','USERS_VERSION') }}"
         tier: "{{ tier }}"
         container_name: "users"
         dockerfile_path: "{{workspace}}/playbooks/docker/dockerfiles/users-microservice-dockerfile"
