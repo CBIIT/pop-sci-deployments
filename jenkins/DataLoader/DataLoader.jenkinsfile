@@ -70,11 +70,11 @@ pipeline {
 			sh 'git submodule update --init'
 				
   			dir('popsci-deployments'){
-  				git branch: 'master',
+  				git branch: 'main',
     			url: 'https://github.com/CBIIT/pop-sci-deployments.git'}
 			
             dir('popsci-model'){
-				git branch: "master",
+				git branch: "main",
 				url: 'https://github.com/CBIIT/popsci-model.git'
             }
   		}
