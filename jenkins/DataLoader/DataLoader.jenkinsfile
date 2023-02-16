@@ -2,7 +2,7 @@ pipeline {
 	agent {
 		node {
 			//label 'data-loader'
-			label 'docker-dataloader'
+			label 'docker-dataloader-popsci'
 		}
 	}
 	parameters {
@@ -15,7 +15,16 @@ pipeline {
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
         useRepository: 'https://github.com/CBIIT/icdc-dataloader')
-    extendedChoice( 
+    gitParameter(branchFilter: 'origin/(.*)', 
+        defaultValue: 'master', 
+        name: 'ModelTag', 
+        type: 'PT_BRANCH_TAG',
+        quickFilterEnabled: false, 
+        selectedValue: 'DEFAULT', 
+        sortMode: 'ASCENDING_SMART', 
+        tagFilter: '*', 
+        useRepository: 'https://github.com/CBIIT/popsci-model.git')
+	extendedChoice( 
         name: 'Environment', 
         defaultValue: 'dev', 
         description: 'Choose the environment to build', 
@@ -75,7 +84,7 @@ pipeline {
     			url: 'https://github.com/CBIIT/pop-sci-deployments.git'}
 			
             dir('popsci-model'){
-				git branch: "main",
+				git branch: "${params.ModelTag}",
 				url: 'https://github.com/CBIIT/popsci-model.git'
             }
   		}
@@ -96,7 +105,8 @@ pipeline {
  			ansiblePlaybook(
                 playbook: '${WORKSPACE}/popsci-deployments/ansible/playbooks/popsci-data-loader.yml',
             	inventory: '${WORKSPACE}/popsci-deployments/ansible/playbooks/hosts',
-            	colorized: true)
+            	colorized: true,
+				extras: '-vvv')
  			}
  		}
     }
