@@ -41,4 +41,4 @@
         model_file1: "{{ workspace }}/popsci-model/model-desc/popsci_model.yml"
         model_file2: "{{ workspace }}/popsci-model/model-desc/popsci_model_props.yml"
         property_file: "config/props-popsci.yml"
-        data_bucket: bento-popsci-metadata
+        data_bucket: pop-sci
