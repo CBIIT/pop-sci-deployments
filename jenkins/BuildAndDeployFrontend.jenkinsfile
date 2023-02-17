@@ -4,6 +4,8 @@ buildAndDeploy(
     parameterName: "FrontendTag",
     codeRepoUrl: "https://github.com/CBIIT/bento-popsci-frontend",
     checkoutDirectory: "bento-popsci-frontend",
+    playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
+    playbookRepoBranch: "main"
     buildPlaybook: "ansible/playbooks/build-frontend-microservice.yml",
     deployPlaybook: "ansible/playbooks/deploy-frontend-microservice.yml",
     inventory: "ansible/playbooks/hosts",
