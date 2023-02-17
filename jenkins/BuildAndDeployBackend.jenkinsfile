@@ -2,7 +2,7 @@
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
-    codeRepoUrl: "https://github.com/CBIIT/popsci-backend/tree/1.0.0-develop.",
+    codeRepoUrl: "https://github.com/CBIIT/popsci-backend",
     checkoutDirectory: "popsci-backend",
 	playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     playbookRepoBranch: "main",
