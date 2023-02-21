@@ -23,5 +23,5 @@ buildAndDeploy(
         subdomain: "popsci",
         domain_name: "bento-tools.org"
     ],
-    checkoutDirectory: "workspace"
+    service: "backend",
 )
