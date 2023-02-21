@@ -3,7 +3,7 @@ buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
     codeRepoUrl: "https://github.com/cbiit/popsci-backend",
-    checkoutDirectory: "workspace",
+    checkoutDirectory: "popsci-backend",
 	playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     playbookRepoBranch: "main",
     buildPlaybook: "ansible/playbooks/build-backend-microservice.yml",
