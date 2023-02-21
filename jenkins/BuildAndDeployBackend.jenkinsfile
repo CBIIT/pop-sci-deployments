@@ -2,7 +2,7 @@
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "BackendTag",
-    codeRepoUrl: "https://github.com/CBIIT/popsci-backend",
+    codeRepoUrl: "https://github.com/cbiit/popsci-backend",
     checkoutDirectory: "popsci-backend",
 	playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     playbookRepoBranch: "main",
@@ -10,7 +10,7 @@ buildAndDeploy(
     deployPlaybook: "ansible/playbooks/deploy-backend-microservice.yml",
     inventory: "ansible/playbooks/hosts",
     tier: "${params.Environment}",
-    projectName: "${params.ProjectName}",
+    projectName: "popsci",
     slackSecretPath: "notification/slack",
     slackSecretName: "bento_slack_url",
     appVersionName: "BE_VERSION",
