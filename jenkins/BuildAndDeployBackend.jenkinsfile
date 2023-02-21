@@ -17,7 +17,6 @@ buildAndDeploy(
     deploymentRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     deploymentCheckoutDirectory: "pop-sci-deployments",
     deploymentFile: "pop-sci-deployments/deployments.yaml",
-    service: "backend",
     useDockerAgent: false,
     extraAnsibleVars: [
         subdomain: "popsci",
