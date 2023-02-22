@@ -1,4 +1,4 @@
-@Library('datacommons-jenkins-shared-library@popsci-test') _
+@Library('datacommons-jenkins-shared-library') _
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "FilesTag",
