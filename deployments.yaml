@@ -2,9 +2,9 @@ Notes: Jenkins pipeline
 project: popsci
 services:
   backend:
-    version: 1.0.0-develop.38
-    image: 1.0.0-develop.38
-    buildNumber: '38'
+    version: 1.0.0-develop.39
+    image: 1.0.0-develop.39
+    buildNumber: '39'
   frontend:
     version: Prototype.13
     image: Prototype.13
