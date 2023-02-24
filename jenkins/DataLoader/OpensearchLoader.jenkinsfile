@@ -86,7 +86,7 @@ pipeline {
             
 			dir('popsci-model'){
                 git branch: "${params.Model_Branch}",
-                url: 'https://github.com/CBIIT/ctdc-model'}
+                url: 'https://github.com/CBIIT/popsci-model'}
 			
 			sh 'git submodule update --init'
   			
