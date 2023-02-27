@@ -9,6 +9,7 @@ module "neo4j" {
   db_private_ip = var.db_private_ip
   database_instance_type = var.database_instance_type
   Name = "popsci-backup-neo4j"
+}
 
 
 #create neo4j http ingress rule
