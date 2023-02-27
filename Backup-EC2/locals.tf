@@ -9,4 +9,5 @@ locals {
   neo4j_https = 7473
   neo4j_bolt = 7687
   redis = "6379"
+  all_ips =  var.cloud_platform == "leidos" ? ["0.0.0.0/0"] : local.nih_ip_cidrs
 }
