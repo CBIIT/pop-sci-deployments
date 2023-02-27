@@ -115,3 +115,8 @@ variable "db_subnet_ids" {
   default     = []
   description = "list of subnet IDs to usee"
 }
+
+ariable "cloud_platform=" {
+  type        = string
+  default     = "leidos"
+}
