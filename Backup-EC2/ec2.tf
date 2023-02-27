@@ -8,7 +8,7 @@ module "neo4j" {
   stack_name = var.stack_name
   db_private_ip = var.db_private_ip
   database_instance_type = var.database_instance_type
-  Name = "popsci-backup-neo4j"
+  tags = 
 }
 
 
