@@ -10,9 +10,9 @@ services:
     image: Prototype.22
     buildNumber: '22'
   auth:
-    version: 2.2.0.20
-    image: 2.2.0.20
-    buildNumber: '20'
+    version: 2.1.0.23
+    image: 2.1.0.23
+    buildNumber: '23'
   files:
     version: 1.4.0.15
     image: 1.4.0.15
