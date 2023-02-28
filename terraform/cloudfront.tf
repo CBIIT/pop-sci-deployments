@@ -1,5 +1,5 @@
 #cloudfront
-module "cloudfront" {
+/*module "cloudfront" {
   count = var.create_cloudfront ? 1 : 0
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront"
   alarms = var.alarms
@@ -13,4 +13,4 @@ module "cloudfront" {
   create_files_bucket = var.create_files_bucket
   target_account_cloudone = var.target_account_cloudone
   public_key_path = file("${path.module}/workspace/ctdc_public_key.pem")
-}
+}*/
