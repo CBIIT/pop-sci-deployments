@@ -306,10 +306,10 @@ variable "cloudfront_log_path_prefix_key" {
   default = "cloudfront/logs"
 }
 
-variable "alarms" {
-  description = "alarms to be configured"
-  type = map(map(string))
-}
+#variable "alarms" {
+  #description = "alarms to be configured"
+  #type = map(map(string))
+#}
 
 variable "slack_secret_name" {
   type = string
