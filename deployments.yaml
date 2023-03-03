@@ -6,9 +6,9 @@ services:
     image: 1.0.0-develop.58
     buildNumber: '58'
   frontend:
-    version: Prototype.38
-    image: Prototype.38
-    buildNumber: '38'
+    version: Prototype.39
+    image: Prototype.39
+    buildNumber: '39'
   auth:
     version: 2.1.0.23
     image: 2.1.0.23
