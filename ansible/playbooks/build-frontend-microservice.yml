@@ -31,6 +31,6 @@
         image_version: "{{ lookup('env','FE_VERSION') }}"
         container_name: "frontend"
         #container_build_path: "{{ workspace }}/{{ project_name }}-frontend"
-        container_build_path: "{{ workspace }}/bento-popsci-frontend"
+        container_build_path: "{{ workspace }}/crdc-popsci-ui"
         dockerfile_path: "{{ workspace }}/playbooks/docker/dockerfiles/frontend-microservice-dockerfile"
         container_registry_url: "{{ ecr_repo }}"
