@@ -2,7 +2,7 @@
 buildAndDeploy(
     label: "cicd_microservice",
     parameterName: "FrontendTag",
-    codeRepoUrl: "https://github.com/CBIIT/bento-popsci-frontend",
+    codeRepoUrl: "https://github.com/CBIIT/crdc-popsci-ui",
     checkoutDirectory: "bento-popsci-frontend",
     playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
     playbookRepoBranch: "main",
