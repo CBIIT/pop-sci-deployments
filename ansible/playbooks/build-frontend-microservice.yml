@@ -38,18 +38,24 @@
         npm cache clean --force
       args:
         chdir: "{{ workspace }}/crdc-popsci-ui"
+      vars:
+        workspace: "{{ lookup('env','WORKSPACE') }}"
 
     # Install dependencies
     - name: install dependencies
       shell: npm install --silent
       args:
         chdir: "{{ workspace }}/crdc-popsci-ui"
+      vars:
+        workspace: "{{ lookup('env','WORKSPACE') }}"
 
     # Build frontend
     - name: build frontend
       shell: npm run build --silent
       args:
         chdir: "{{ workspace }}/crdc-popsci-ui"
+      vars:
+        workspace: "{{ lookup('env','WORKSPACE') }}"
 
     # Frontend build
     - name: build frontend
