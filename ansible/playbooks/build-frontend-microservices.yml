@@ -5,33 +5,21 @@
 #  become: yes
 
   tasks:
-    # Install collections with retry mechanism
-    - name: install collections
-      block:
-        - name: install community.docker collection
-          command: ansible-galaxy collection install community.docker -vvv
-          register: result
-          until: result.rc == 0
-          retries: 3
-          delay: 10
-          ignore_errors: yes
+    #install collections
+    - name: install aws collections
+      shell: "ansible-galaxy collection install {{ item | quote }} --force"
+      loop:
+        -  community.docker:<=3.4.3
+        -  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,popsi-build
 
-        - name: install custom collection
-          command: ansible-galaxy collection install git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,popsi-build -vvv
-          register: result
-          until: result.rc == 0
-          retries: 3
-          delay: 10
-          ignore_errors: yes
-
-    # Docker login
+    #docker login
     - name: docker login
       include_role:
         name: bento.common.ecr_login
       vars:
         region: us-east-1
 
-    # Frontend build
+    #frontend build
     - name: build frontend
       include_role:
         name: bento.common.build_frontend
@@ -42,6 +30,7 @@
         project_name: "{{ project_name }}"
         image_version: "{{ lookup('env','FE_VERSION') }}"
         container_name: "frontend"
+        #container_build_path: "{{ workspace }}/{{ project_name }}-frontend"
         container_build_path: "{{ workspace }}/crdc-popsci-ui"
         dockerfile_path: "{{ workspace }}/playbooks/docker/dockerfiles/frontend-microservice-dockerfile"
         container_registry_url: "{{ ecr_repo }}"
