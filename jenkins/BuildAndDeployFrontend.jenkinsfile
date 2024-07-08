@@ -1,25 +1,93 @@
-@Library('datacommons-jenkins-shared-library') _
-buildAndDeploy(
-    label: "cicd_microservice",
-    parameterName: "FrontendTag",
-    codeRepoUrl: "https://github.com/CBIIT/crdc-popsci-ui",
-    checkoutDirectory: "crdc-popsci-ui",
-    playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
-    playbookRepoBranch: "main",
-    buildPlaybook: "ansible/playbooks/build-frontend-microservice.yml",
-    deployPlaybook: "ansible/playbooks/deploy-frontend-microservice.yml",
-    inventory: "ansible/playbooks/hosts",
-    tier: "${params.Environment}",
-    projectName: "${params.ProjectName}",
-    slackSecretPath: "notification/slack",
-    slackSecretName: "bento_slack_url",
-    appVersionName: "FE_VERSION",
-    deploymentRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
-    deploymentCheckoutDirectory: "pop-sci-deployments",
-    deploymentFile: "pop-sci-deployments/deployments.yaml",
-    extraAnsibleVars: [
-        subdomain: "popsci",
-        domain_name: "bento-tools.org"
-    ],
-    service: "frontend",
-)
+pipeline {
+	agent {
+		node {
+			label 'cicd_microservice'
+		}
+	}
+	
+	environment {
+        NODE_OPTIONS = '--max-old-space-size=8192'
+    }
+	
+	parameters {
+    extendedChoice(
+        name: 'Environment',
+        defaultValue: 'dev',
+        description: 'Choose the environment to build',
+        type: 'PT_SINGLE_SELECT',
+        value: 'dev,qa,qa2,stage,prod')
+	string(
+	    defaultValue: 'popsci',
+		description: 'The project this build is for',
+		name: 'ProjectName')
+	gitParameter(branchFilter: 'origin/(.*)', 
+        defaultValue: 'master', 
+        name: 'FrontendTag', 
+        type: 'GitParameterDefinition',
+        quickFilterEnabled: true, 
+        selectedValue: 'DEFAULT', 
+        sortMode: 'ASCENDING_SMART', 
+        tagFilter: '*', 
+        useRepository: 'https://github.com/CBIIT/crdc-popsci-ui')
+	booleanParam(
+		defaultValue: true,
+		name: 'UpdateDeploymentVersion')
+  }
+  options {
+  	ansiColor('xterm')
+  }
+  stages{
+  	stage('checkout'){
+  		steps {
+
+		checkout([$class: 'GitSCM',
+			branches: [[name: "${params.FrontendTag}"]],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: 'crdc-popsci-ui']],
+			submoduleCfg: [],
+			userRemoteConfigs:
+			[[url: 'https://github.com/CBIIT/crdc-popsci-ui']]])
+
+  		checkout([$class: 'GitSCM',
+			branches: [[name: '*/main']],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: 'playbooks']],
+			submoduleCfg: [],
+			userRemoteConfigs:
+			[[url: 'https://github.com/CBIIT/pop-sci-deployments']]])
+
+        }
+
+  	}
+
+  	stage('build'){
+      environment{
+        FE_VERSION = "${params.FrontendTag}-${BUILD_NUMBER}"
+      }
+ 		steps {
+ 			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                ansiblePlaybook(
+                    buildPlaybook: '${WORKSPACE}/ansible/playbooks/build-frontend-microservice.yml', 
+                    deployPlaybook:'${WORKSPACE}/ansible/playbooks/deploy-frontend-microservice.yml',
+            		inventory: '${WORKSPACE}/ansible/playbooks/hosts',
+                    extraVars: [
+                        tier: "${params.Environment}",
+						project_name: "${params.ProjectName}",
+						auth_enabled: false
+						],
+                    colorized: true)
+ 			}
+ 		}
+  	}
+
+  }
+  post {
+    cleanup {
+
+    cleanWs()
+
+    }
+  }
+}
