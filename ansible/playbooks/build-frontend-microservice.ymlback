@@ -1,0 +1,90 @@
+- name: build frontend microservice
+  hosts: all
+  connection: local
+  gather_facts: yes
+
+  tasks:
+    # Install collections with retry mechanism
+    - name: install collections
+      block:
+        - name: install community.docker collection
+          command: ansible-galaxy collection install community.docker -vvv
+          register: result
+          until: result.rc == 0
+          retries: 3
+          delay: 10
+          ignore_errors: yes
+
+        - name: install custom collection
+          command: ansible-galaxy collection install git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,popsi-build -vvv
+          register: result
+          until: result.rc == 0
+          retries: 3
+          delay: 10
+          ignore_errors: yes
+
+    # docker login
+    - name: docker login
+      include_role:
+        name: bento.common.ecr_login
+      vars:
+        region: us-east-1
+
+    # Ensure n is installed
+    - name: Ensure n (Node.js version manager) is installed
+      command: curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o /usr/local/bin/n && chmod +x /usr/local/bin/n
+      args:
+        creates: /usr/local/bin/n
+
+    # Ensure correct node version using n
+    - name: Ensure correct Node.js version
+      command: n stable
+      args:
+        creates: /usr/local/bin/node
+
+    # Clean npm cache
+    - name: Clean npm cache
+      command: npm cache clean --force
+      args:
+        chdir: "{{ lookup('env','WORKSPACE') }}/crdc-popsci-ui"
+
+    # Remove node_modules and package-lock.json
+    - name: Remove node_modules and package-lock.json
+      file:
+        path: "{{ lookup('env','WORKSPACE') }}/crdc-popsci-ui/node_modules"
+        state: absent
+
+    - name: Remove package-lock.json
+      file:
+        path: "{{ lookup('env','WORKSPACE') }}/crdc-popsci-ui/package-lock.json"
+        state: absent
+
+    # Install npm dependencies
+    - name: Install npm dependencies
+      command: npm install
+      args:
+        chdir: "{{ lookup('env','WORKSPACE') }}/crdc-popsci-ui"
+
+    # Install react-dev-utils if missing
+    - name: Install react-dev-utils
+      npm:
+        name: react-dev-utils
+        state: present
+        production: no
+      args:
+        chdir: "{{ lookup('env','WORKSPACE') }}/crdc-popsci-ui"
+
+    # Build frontend
+    - name: build frontend
+      include_role:
+        name: bento.common.build_frontend
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+        workspace: "{{ lookup('env','WORKSPACE') }}"
+        build_number: "{{ lookup('env','BUILD_NUMBER')}}"
+        project_name: "{{ project_name }}"
+        image_version: "{{ lookup('env','FE_VERSION') }}"
+        container_name: "frontend"
+        container_build_path: "{{ workspace }}/crdc-popsci-ui"
+        dockerfile_path: "{{ workspace }}/playbooks/docker/dockerfiles/frontend-microservice-dockerfile"
+        container_registry_url: "{{ ecr_repo }}"
