@@ -24,40 +24,14 @@
           delay: 10
           ignore_errors: yes
 
-    # Docker login
+    #docker login
     - name: docker login
       include_role:
         name: bento.common.ecr_login
       vars:
         region: us-east-1
 
-    # Clean node_modules and npm cache
-    - name: clean node_modules and npm cache
-      shell: |
-        rm -rf node_modules
-        npm cache clean --force
-      args:
-        chdir: "{{ workspace }}/crdc-popsci-ui"
-      vars:
-        workspace: "{{ lookup('env','WORKSPACE') }}"
-
-    # Install dependencies
-    - name: install dependencies
-      shell: npm install --silent
-      args:
-        chdir: "{{ workspace }}/crdc-popsci-ui"
-      vars:
-        workspace: "{{ lookup('env','WORKSPACE') }}"
-
-    # Build frontend
-    - name: build frontend
-      shell: npm run build --silent
-      args:
-        chdir: "{{ workspace }}/crdc-popsci-ui"
-      vars:
-        workspace: "{{ lookup('env','WORKSPACE') }}"
-
-    # Frontend build
+    #frontend build
     - name: build frontend
       include_role:
         name: bento.common.build_frontend
@@ -68,6 +42,7 @@
         project_name: "{{ project_name }}"
         image_version: "{{ lookup('env','FE_VERSION') }}"
         container_name: "frontend"
+        #container_build_path: "{{ workspace }}/{{ project_name }}-frontend"
         container_build_path: "{{ workspace }}/crdc-popsci-ui"
         dockerfile_path: "{{ workspace }}/playbooks/docker/dockerfiles/frontend-microservice-dockerfile"
         container_registry_url: "{{ ecr_repo }}"
