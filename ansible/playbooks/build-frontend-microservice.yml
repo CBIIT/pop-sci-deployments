@@ -31,6 +31,26 @@
       vars:
         region: us-east-1
 
+    # Clean node_modules and npm cache
+    - name: clean node_modules and npm cache
+      shell: |
+        rm -rf node_modules
+        npm cache clean --force
+      args:
+        chdir: "{{ workspace }}/crdc-popsci-ui"
+
+    # Install dependencies
+    - name: install dependencies
+      shell: npm install --silent
+      args:
+        chdir: "{{ workspace }}/crdc-popsci-ui"
+
+    # Build frontend
+    - name: build frontend
+      shell: npm run build --silent
+      args:
+        chdir: "{{ workspace }}/crdc-popsci-ui"
+
     # Frontend build
     - name: build frontend
       include_role:
