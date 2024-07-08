@@ -6,10 +6,10 @@
 
   tasks:
     #install collections
-    - name: install collections
+    - name: install aws collections
       shell: "ansible-galaxy collection install {{ item | quote }} --force"
       loop:
-        -  community.docker
+        -  community.docker:<=3.4.3
         -  git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,popsi-build
 
     #docker login
