@@ -30,11 +30,17 @@
       vars:
         region: us-east-1
 
-    # Ensure node version is correct
-    - name: Ensure correct node version
-      command: nvm use
-      environment:
-        NVM_DIR: "{{ lookup('env', 'HOME') }}/.nvm"
+    # Ensure n is installed
+    - name: Ensure n (Node.js version manager) is installed
+      command: curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o /usr/local/bin/n && chmod +x /usr/local/bin/n
+      args:
+        creates: /usr/local/bin/n
+
+    # Ensure correct node version using n
+    - name: Ensure correct Node.js version
+      command: n stable
+      args:
+        creates: /usr/local/bin/node
 
     # Clean npm cache
     - name: Clean npm cache
