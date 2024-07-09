@@ -41,20 +41,20 @@ pipeline {
   		steps {
 
 		checkout([$class: 'GitSCM',
-			branches: [[name: "${params.FrontendTag}"]],
-			doGenerateSubmoduleConfigurations: false,
-			extensions: [[$class: 'RelativeTargetDirectory',
-			relativeTargetDir: 'crdc-popsci-ui']],
-			submoduleCfg: [],
+			branches: [[name: "${env.CODE_BRANCH}"]],
+			extensions: [[$class: 'SubmoduleOption', 
+			recursiveSubmodules: true],
+			[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: "crdc-popsci-ui"]],
 			userRemoteConfigs:
 			[[url: 'https://github.com/CBIIT/crdc-popsci-ui']]])
 
   		checkout([$class: 'GitSCM',
-			branches: [[name: '*/main']],
-			doGenerateSubmoduleConfigurations: false,
-			extensions: [[$class: 'RelativeTargetDirectory',
-			relativeTargetDir: 'playbooks']],
-			submoduleCfg: [],
+			branches: [[name: "${params.Environment}"]],
+			extensions: [[$class: 'SubmoduleOption', 
+			recursiveSubmodules: true],
+			[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: "pop-sci-deployments"]],
 			userRemoteConfigs:
 			[[url: 'https://github.com/CBIIT/pop-sci-deployments']]])
 
