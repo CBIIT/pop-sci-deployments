@@ -21,7 +21,7 @@ pipeline {
 		description: 'The project this build is for',
 		name: 'ProjectName')
 	gitParameter(branchFilter: 'origin/(.*)', 
-        defaultValue: 'master', 
+        defaultValue: 'main', 
         name: 'FrontendTag', 
         type: 'GitParameterDefinition',
         quickFilterEnabled: true, 
