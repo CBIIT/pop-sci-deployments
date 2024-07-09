@@ -41,7 +41,7 @@ pipeline {
 
     environment {
         PROJECT = 'pop-sci'
-        FRONTEND_TAG = "${params.FrontendBranch}"
+        FRONTEND_TAG = "${params.CodeBranch}"
         JOB_PATH = '_default/_lower/POPSCI/_jobs'
         CODE_REPO_URL = "https://github.com/CBIIT/crdc-popsci-ui"
         PLAYBOOK_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
@@ -57,7 +57,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout([$class: 'GitSCM',
-                    branches: [[name: "${params.FrontendBranch}"]],
+                    branches: [[name: "${env.FRONTEND_TAG}"]],
                     extensions: [[$class: 'SubmoduleOption', recursiveSubmodules: true],
                     [$class: 'RelativeTargetDirectory', relativeTargetDir: "crdc-popsci-ui"]],
                     userRemoteConfigs: [[url: "${env.CODE_REPO_URL}"]]
@@ -118,9 +118,9 @@ pipeline {
             steps {
                 script {
                     tagRepo(
-                        gitTag: "${params.FrontendBranch}",
+                        gitTag: "${env.FRONTEND_TAG}",
                         gitUrl: "https://github.com/CBIIT/crdc-popsci-ui",
-                        checkoutDirectory: "${env.PROJECT}-frontend"
+                        checkoutDirectory: "crdc-popsci-ui"
                     )
                 }
             }
