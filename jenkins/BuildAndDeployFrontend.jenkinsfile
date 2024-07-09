@@ -54,7 +54,7 @@ pipeline {
 			extensions: [[$class: 'SubmoduleOption', 
 			recursiveSubmodules: true],
 			[$class: 'RelativeTargetDirectory',
-			relativeTargetDir: "pop-sci-deployments"]],
+			relativeTargetDir: "playbooks"]],
 			userRemoteConfigs:
 			[[url: 'https://github.com/CBIIT/pop-sci-deployments']]])
 
