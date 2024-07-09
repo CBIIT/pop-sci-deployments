@@ -1,0 +1,91 @@
+pipeline {
+	agent {
+		node {
+			label 'cicd_microservice'
+		}
+	}
+	
+	environment {
+        NODE_OPTIONS = '--max-old-space-size=8192'
+    }
+	
+	parameters {
+    extendedChoice(
+        name: 'Environment',
+        defaultValue: 'dev',
+        description: 'Choose the environment to build',
+        type: 'PT_SINGLE_SELECT',
+        value: 'dev,qa,qa2,stage,prod')
+	string(
+	    defaultValue: 'popsci',
+		description: 'The project this build is for',
+		name: 'ProjectName')
+	gitParameter(branchFilter: 'origin/(.*)', 
+        defaultValue: 'main', 
+        name: 'FrontendTag', 
+        type: 'GitParameterDefinition',
+        quickFilterEnabled: true, 
+        selectedValue: 'DEFAULT', 
+        sortMode: 'ASCENDING_SMART', 
+        tagFilter: '*', 
+        useRepository: 'https://github.com/CBIIT/crdc-popsci-ui')
+	booleanParam(
+		defaultValue: true,
+		name: 'UpdateDeploymentVersion')
+  }
+  options {
+  	ansiColor('xterm')
+  }
+  stages{
+  	stage('checkout'){
+  		steps {
+
+		checkout([$class: 'GitSCM',
+			branches: [[name: "${params.FrontendTag}"]],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: 'icdc-frontend']],
+			submoduleCfg: [],
+			userRemoteConfigs:
+			[[url: 'https://github.com/CBIIT/bento-icdc-frontend']]])
+
+  		checkout([$class: 'GitSCM',
+			branches: [[name: '*/main']],
+			doGenerateSubmoduleConfigurations: false,
+			extensions: [[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: 'playbooks']],
+			submoduleCfg: [],
+			userRemoteConfigs:
+			[[url: 'https://github.com/CBIIT/icdc-deployments']]])
+        }
+
+  	}
+
+  	stage('build'){
+      environment{
+        FE_VERSION = "${params.FrontendTag}-${BUILD_NUMBER}"
+      }
+ 		steps {
+ 			wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                ansiblePlaybook(
+                    playbook: '${WORKSPACE}/ansible/playbooks/build-frontend-microservice.yml', 
+            		inventory: '${WORKSPACE}/ansible/playbooks/hosts',
+                    extraVars: [
+                        tier: "${params.Environment}",
+						project_name: "${params.ProjectName}",
+						auth_enabled: false
+						],
+                    colorized: true)
+ 			}
+ 		}
+  	}
+
+  }
+  post {
+    cleanup {
+
+    cleanWs()
+
+    }
+  }
+}
