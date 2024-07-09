@@ -1,18 +1,20 @@
-FROM node:20.11.1-alpine3.19  as build
+FROM node:20.11.1-alpine3.19 as build
 
 WORKDIR /usr/src/app
 
 COPY . .
 
+# Combine apk commands to reduce layers and improve efficiency
 RUN apk upgrade --update && apk --no-cache add git
 
-RUN NODE_OPTIONS=--openssl-legacy-provider
+# Set NODE_OPTIONS environment variable once for the required steps
+ENV NODE_OPTIONS="--max-old-space-size=4096 --openssl-legacy-provider"
 
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm install --legacy-peer-deps
+# Install dependencies
+RUN npm install --legacy-peer-deps
 
-RUN NODE_OPTIONS=--openssl-legacy-provider
-
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
+# Build the application
+RUN npm run build
 
 FROM nginx:1.25.3-alpine3.18-slim
 
@@ -22,12 +24,14 @@ COPY --from=build /usr/src/app/conf/nginx.conf /etc/nginx/conf.d/configfile.temp
 COPY --from=build /usr/src/app/conf/entrypoint.sh /
 
 ENV PORT 80
-
 ENV HOST 0.0.0.0
 
-RUN sh -c "envsubst '\$PORT'  < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
+# Use envsubst to substitute the environment variable
+RUN sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
+
+# Ensure the entrypoint script is executable
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+ENTRYPOINT ["sh", "/entrypoint.sh"]
