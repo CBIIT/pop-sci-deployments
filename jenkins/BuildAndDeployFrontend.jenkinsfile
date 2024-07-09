@@ -93,7 +93,6 @@ pipeline {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
-                        extras: "-e '${env.EXTRA_ANSIBLE_VARS}'",
                         colorized: true
                     )
                 }
