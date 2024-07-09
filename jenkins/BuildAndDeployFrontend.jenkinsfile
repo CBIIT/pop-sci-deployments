@@ -19,7 +19,7 @@ pipeline {
         gitParameter(
             branchFilter: 'origin/(.*)',
             defaultValue: 'main',
-            name: 'FrontendBranch',
+            name: 'CodeBranch',
             type: 'GitParameterDefinition',
             quickFilterEnabled: true,
             selectedValue: 'DEFAULT',
