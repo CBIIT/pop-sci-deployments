@@ -32,6 +32,10 @@ pipeline {
             name: 'UpdateDeploymentVersion'
         )
 
+        booleanParam(
+            defaultValue: true,
+            name: 'RunDeployStage'
+        )
     }
 
     options {
@@ -59,7 +63,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                     branches: [[name: "${params.FrontendBranch}"]],
                     doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "$crdc-popsci-ui"]],
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "crdc-popsci-ui"]],
                     submoduleCfg: [],
                     userRemoteConfigs: [[url: "${env.CODE_REPO_URL}"]]
                 ])
@@ -88,7 +92,7 @@ pipeline {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
-                        extras: [
+                        extraVars: [
                             project_name: "${env.PROJECT}",
                             subdomain: "popsci",
                             domain_name: "bento-tools.org",
@@ -135,7 +139,7 @@ pipeline {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.DEPLOY_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
-                        extras: [
+                        extraVars: [
                             project_name: "${env.PROJECT}",
                             subdomain: "popsci",
                             domain_name: "bento-tools.org",
@@ -161,4 +165,3 @@ pipeline {
         }
     }
 }
-
