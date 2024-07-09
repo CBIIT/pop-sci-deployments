@@ -46,7 +46,7 @@ pipeline {
     environment {
         PROJECT = 'pop-sci'
         FRONTEND_TAG = "${params.FrontendBranch}"
-        JOB_PATH = 'pop-sci/build_and_deploy/BuildAndDeployFrontendService'
+        JOB_PATH = '_default/_lower/POPSCI/_jobs'
         CODE_REPO_URL = "https://github.com/CBIIT/crdc-popsci-ui"
         PLAYBOOK_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
         PLAYBOOK_REPO_BRANCH = "main"
@@ -55,7 +55,6 @@ pipeline {
         INVENTORY = "ansible/playbooks/hosts"
         DEPLOYMENT_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
         DEPLOYMENT_FILE = "pop-sci-deployments/deployments.yaml"
-        EXTRA_ANSIBLE_VARS = 'subdomain=popsci domain_name=bento-tools.org service=frontend'
     }
 
     stages {
@@ -64,7 +63,7 @@ pipeline {
                 checkout([$class: 'GitSCM',
                     branches: [[name: "${params.FrontendBranch}"]],
                     doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "crdc-popsci-ui"]],
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "$crdc-popsci-ui"]],
                     submoduleCfg: [],
                     userRemoteConfigs: [[url: "${env.CODE_REPO_URL}"]]
                 ])
@@ -93,6 +92,12 @@ pipeline {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
+                        extras: [
+                            project_name: "${env.PROJECT}",
+                            subdomain: "popsci",
+                            domain_name: "bento-tools.org",
+                            service: "frontend"
+                        ],
                         colorized: true
                     )
                 }
@@ -106,7 +111,7 @@ pipeline {
                         writeDeployment(
                             version: "${env.FRONTEND_TAG}.${BUILD_NUMBER}",
                             image: "${env.FRONTEND_TAG}.${BUILD_NUMBER}",
-                            service: "${env.SERVICE}",
+                            service: "frontend",
                             deploymentFile: "${env.PROJECT}-deployments/${env.DEPLOYMENT_FILE}",
                             deploymentRepoUrl: "${env.DEPLOYMENT_REPO_URL}",
                             deploymentCheckoutDirectory: "${env.PROJECT}-deployments"
@@ -134,7 +139,12 @@ pipeline {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.DEPLOY_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
-                        extras: "-e '${env.EXTRA_ANSIBLE_VARS}'",
+                        extras: [
+                            project_name: "${env.PROJECT}",
+                            subdomain: "popsci",
+                            domain_name: "bento-tools.org",
+                            service: "frontend"
+                        ],
                         colorized: true
                     )
                 }
@@ -155,3 +165,4 @@ pipeline {
         }
     }
 }
+
