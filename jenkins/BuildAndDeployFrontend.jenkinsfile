@@ -32,10 +32,6 @@ pipeline {
             name: 'UpdateDeploymentVersion'
         )
 
-        booleanParam(
-            defaultValue: true,
-            name: 'RunDeployStage'
-        )
     }
 
     options {
