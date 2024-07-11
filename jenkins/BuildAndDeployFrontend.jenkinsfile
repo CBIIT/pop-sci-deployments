@@ -43,6 +43,7 @@ pipeline {
     environment {
         PROJECT = 'pop-sci'
         FRONTEND_TAG = "${params.CodeBranch}"
+        FE_VERSION = "${params.CodeBranch}"
         JOB_PATH = '_default/_lower/POPSCI/_jobs'
         CODE_REPO_URL = "https://github.com/CBIIT/crdc-popsci-ui"
         PLAYBOOK_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
