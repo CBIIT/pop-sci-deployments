@@ -108,6 +108,7 @@ pipeline {
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
                         extraVars: [
                             project_name: "${env.PROJECT}",
+                            dockerfile_path: "${WORKSPACE}/crdc-popsci-ui/Dockerfile"
                         ],
                         colorized: true
                     )
