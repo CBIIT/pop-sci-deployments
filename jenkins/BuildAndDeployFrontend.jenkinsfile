@@ -96,6 +96,10 @@ pipeline {
 
         stage('Build') {
             steps {
+               // Ensure FRONTEND_TAG does not start with a period
+                    if (env.FRONTEND_TAG.startsWith('.')) {
+                        error "Invalid Docker tag: ${env.FRONTEND_TAG}"
+                    } 
                 wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
