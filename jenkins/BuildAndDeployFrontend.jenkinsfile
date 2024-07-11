@@ -8,6 +8,7 @@ pipeline {
     }
 
     parameters {
+
         extendedChoice(
             name: 'Environment',
             defaultValue: 'dev',
@@ -56,32 +57,36 @@ pipeline {
     stages {
         stage('checkout'){
             steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: "${env.FRONTEND_TAG}"]],
-                    extensions: [[$class: 'SubmoduleOption', 
-                    recursiveSubmodules: true],
-                    [$class: 'RelativeTargetDirectory',
-                    relativeTargetDir: "crdc-popsci-ui"]],
-                    userRemoteConfigs:
-                    [[url: "${env.CODE_REPO_URL}"]]])
 
-                checkout([$class: 'GitSCM',
-                    branches: [[name: "${env.PLAYBOOK_REPO_BRANCH}"]],
-                    extensions: [[$class: 'SubmoduleOption', 
-                    recursiveSubmodules: true],
-                    [$class: 'RelativeTargetDirectory',
-                    relativeTargetDir: "playbooks"]],
-                    userRemoteConfigs:
-                    [[url: "${env.PLAYBOOK_REPO_URL}"]]])
+		    checkout([$class: 'GitSCM',
+			    branches: [[name: "${env.FRONTEND_TAG}"]],
+			    doGenerateSubmoduleConfigurations: false,
+			    extensions: [[$class: 'RelativeTargetDirectory',
+			    relativeTargetDir: "crdc-popsci-ui"]],
+			    submoduleCfg: [],
+			    userRemoteConfigs:
+			    [[url: "${env.CODE_REPO_URL}"]]])
 
-                checkout([$class: 'GitSCM',
-                    branches: [[name: "${params.Environment}"]],
-                    extensions: [[$class: 'SubmoduleOption', 
-                    recursiveSubmodules: true],
-                    [$class: 'RelativeTargetDirectory',
-                    relativeTargetDir: "${env.PROJECT}-deployments"]],
-                    userRemoteConfigs:
-                    [[url: "${env.DEPLOYMENT_REPO_URL}"]]])
+  		    sh "cd crdc-popsci-ui && git submodule update --init --recursive"
+		
+		    checkout([$class: 'GitSCM',
+			    branches: [[name: "${env.PLAYBOOK_REPO_BRANCH}"]],
+			    doGenerateSubmoduleConfigurations: false,
+			    extensions: [[$class: 'RelativeTargetDirectory',
+			    relativeTargetDir: "playbooks"]],
+			    submoduleCfg: [],
+			    userRemoteConfigs:
+			    [[url: "${env.PLAYBOOK_REPO_URL}"]]])
+
+  		    checkout([$class: 'GitSCM',
+			    branches: [[name: "${params.Environment}"]],
+			    doGenerateSubmoduleConfigurations: false,
+			    extensions: [[$class: 'RelativeTargetDirectory',
+			    relativeTargetDir: "${env.PROJECT}-deployments"]],
+			    submoduleCfg: [],
+			    userRemoteConfigs:
+			    [[url: "${env.DEPLOYMENT_REPO_URL}"]]])
+
             }
         }
 
@@ -96,19 +101,12 @@ pipeline {
 
         stage('Build') {
             steps {
-               // Ensure FRONTEND_TAG does not start with a period
-                    if (env.FRONTEND_TAG.startsWith('.')) {
-                        error "Invalid Docker tag: ${env.FRONTEND_TAG}"
-                    } 
                 wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
                     ansiblePlaybook(
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
                         extraVars: [
                             project_name: "${env.PROJECT}",
-                            subdomain: "popsci",
-                            domain_name: "bento-tools.org",
-                            service: "frontend"
                         ],
                         colorized: true
                     )
