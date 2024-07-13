@@ -125,7 +125,7 @@ pipeline {
                             version: "${env.FRONTEND_TAG}.${BUILD_NUMBER}",
                             image: "${env.FRONTEND_TAG}.${BUILD_NUMBER}",
                             service: "frontend",
-                            deploymentFile: "${env.REPO_PROJECT}-deployments/${env.DEPLOYMENT_FILE}",
+                            deploymentFile: "${env.DEPLOYMENT_FILE}",
                             deploymentRepoUrl: "${env.DEPLOYMENT_REPO_URL}",
                             deploymentCheckoutDirectory: "${env.REPO_PROJECT}-deployments"
                         )
