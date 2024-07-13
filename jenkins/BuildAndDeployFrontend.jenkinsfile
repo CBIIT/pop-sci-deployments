@@ -41,7 +41,8 @@ pipeline {
     }
 
     environment {
-        PROJECT = 'pop-sci'
+        PROJECT = 'popsci'
+	REPO_PROJECT='pop-sci'
         FRONTEND_TAG = "${params.CodeBranch}"
         FE_VERSION = "${params.CodeBranch}"
         JOB_PATH = '_default/_lower/POPSCI/_jobs'
@@ -52,7 +53,7 @@ pipeline {
         DEPLOY_PLAYBOOK = "ansible/playbooks/deploy-frontend-microservice.yml"
         INVENTORY = "ansible/playbooks/hosts"
         DEPLOYMENT_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
-        DEPLOYMENT_FILE = "pop-sci-deployments/deployments.yaml"
+        DEPLOYMENT_FILE = "deployments.yaml"
     }
 
     stages {
@@ -83,7 +84,7 @@ pipeline {
 			    branches: [[name: "${params.Environment}"]],
 			    doGenerateSubmoduleConfigurations: false,
 			    extensions: [[$class: 'RelativeTargetDirectory',
-			    relativeTargetDir: "${env.PROJECT}-deployments"]],
+			    relativeTargetDir: "${env.REPO_PROJECT}-deployments"]],
 			    submoduleCfg: [],
 			    userRemoteConfigs:
 			    [[url: "${env.DEPLOYMENT_REPO_URL}"]]])
@@ -124,9 +125,9 @@ pipeline {
                             version: "${env.FRONTEND_TAG}.${BUILD_NUMBER}",
                             image: "${env.FRONTEND_TAG}.${BUILD_NUMBER}",
                             service: "frontend",
-                            deploymentFile: "${env.PROJECT}-deployments/${env.DEPLOYMENT_FILE}",
+                            deploymentFile: "${env.REPO_PROJECT}-deployments/${env.DEPLOYMENT_FILE}",
                             deploymentRepoUrl: "${env.DEPLOYMENT_REPO_URL}",
-                            deploymentCheckoutDirectory: "${env.PROJECT}-deployments"
+                            deploymentCheckoutDirectory: "${env.REPO_PROJECT}-deployments"
                         )
                     }
                 }
