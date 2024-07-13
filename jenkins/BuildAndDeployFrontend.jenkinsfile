@@ -101,7 +101,22 @@ pipeline {
             }
         }
 
-     
+        stage('Build') {
+            steps {
+                wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                    ansiblePlaybook(
+                        playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
+                        inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
+                        extraVars: [
+                            project_name: "${env.PROJECT}",
+                            dockerfile_path: "${WORKSPACE}/crdc-popsci-ui/Dockerfile"
+                        ],
+                        colorized: true
+                    )
+                }
+            }
+        }
+
         stage('Update Deployment Manifest') {
             steps {
                 script {
