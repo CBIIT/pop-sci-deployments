@@ -42,7 +42,8 @@ pipeline {
 
     environment {
         PROJECT = 'popsci'
-	REPO_PROJECT='pop-sci'
+	    REPO_PROJECT='pop-sci'
+        TIER = "${params.Environment}"
         FRONTEND_TAG = "${params.CodeBranch}"
         FE_VERSION = "${params.CodeBranch}"
         JOB_PATH = '_default/_lower/POPSCI/_jobs'
@@ -108,6 +109,7 @@ pipeline {
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
                         extraVars: [
+                            tier: "${env.TIER}"
                             project_name: "${env.PROJECT}",
                             dockerfile_path: "${WORKSPACE}/crdc-popsci-ui/Dockerfile"
                         ],
@@ -153,7 +155,7 @@ pipeline {
                         playbook: "${WORKSPACE}/playbooks/${env.DEPLOY_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
                         extraVars: [
-                            tier: "${params.Environment}"
+                            tier: "${env.TIER}"
                             project_name: "${env.PROJECT}",
                             subdomain: "popsci",
                             domain_name: "bento-tools.org",
