@@ -1,26 +1,174 @@
-@Library('datacommons-jenkins-shared-library@popsci-test') _
-buildAndDeploy(
-    label: "cicd_microservice",
-    parameterName: "BackendTag",
-    codeRepoUrl: "https://github.com/cbiit/popsci-backend",
-    checkoutDirectory: "workspace",
-	playbookRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
-    playbookRepoBranch: "main",
-    buildPlaybook: "ansible/playbooks/build-backend-microservice.yml",
-    deployPlaybook: "ansible/playbooks/deploy-backend-microservice.yml",
-    inventory: "ansible/playbooks/hosts",
-    tier: "${params.Environment}",
-    projectName: "popsci",
-    slackSecretPath: "notification/slack",
-    slackSecretName: "bento_slack_url",
-    appVersionName: "BE_VERSION",
-    deploymentRepoUrl: "https://github.com/CBIIT/pop-sci-deployments",
-    deploymentCheckoutDirectory: "pop-sci-deployments",
-    deploymentFile: "pop-sci-deployments/deployments.yaml",
-    useDockerAgent: false,
-    extraAnsibleVars: [
-        subdomain: "popsci",
-        domain_name: "bento-tools.org"
-    ],
-    service: "backend",
-)
+@Library('datacommons-jenkins-shared-library@v1.1') _
+
+pipeline {
+    agent {
+        node {
+            label 'cicd_microservice'
+        }
+    }
+
+    parameters {
+
+        extendedChoice(
+            name: 'Environment',
+            defaultValue: 'dev',
+            description: 'Choose the environment to build',
+            type: 'PT_SINGLE_SELECT',
+            value: 'dev'
+        )
+
+        gitParameter(
+            branchFilter: 'origin/(.*)',
+            defaultValue: 'main',
+            name: 'CodeBranch',
+            type: 'GitParameterDefinition',
+            quickFilterEnabled: true,
+            selectedValue: 'DEFAULT',
+            sortMode: 'ASCENDING_SMART',
+            tagFilter: '*',
+            useRepository: 'https://github.com/CBIIT/crdc-popsci-backend'
+        )
+
+        booleanParam(
+            defaultValue: true,
+            name: 'UpdateDeploymentVersion'
+        )
+    }
+
+    options {
+        ansiColor('xterm')
+        timestamps()
+    }
+
+    environment {
+        PROJECT = 'popsci'
+	    REPO_PROJECT='pop-sci'
+        TIER = "${params.Environment}"
+        BACKEND_TAG = "${params.CodeBranch}"
+        BE_VERSION = "${params.CodeBranch}"
+        JOB_PATH = '_default/_lower/POPSCI/_jobs'
+        CODE_REPO_URL = "https://github.com/CBIIT/crdc-popsci-backend"
+        PLAYBOOK_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
+        PLAYBOOK_REPO_BRANCH = "main"
+        BUILD_PLAYBOOK = "ansible/playbooks/build-backend-microservice.yml"
+        DEPLOY_PLAYBOOK = "ansible/playbooks/deploy-backend-microservice.yml"
+        INVENTORY = "ansible/playbooks/hosts"
+        DEPLOYMENT_REPO_URL = "https://github.com/CBIIT/pop-sci-deployments"
+        DEPLOYMENT_FILE = "deployments.yaml"
+    }
+
+    stages {
+        stage('checkout'){
+            steps {
+
+		    checkout([$class: 'GitSCM',
+			    branches: [[name: "${env.BACKEND_TAG}"]],
+			    doGenerateSubmoduleConfigurations: false,
+			    extensions: [[$class: 'RelativeTargetDirectory',
+			    relativeTargetDir: "crdc-popsci-backend"]],
+			    submoduleCfg: [],
+			    userRemoteConfigs:
+			    [[url: "${env.CODE_REPO_URL}"]]])
+
+  		    //sh "cd crdc-popsci-backend && git submodule update --init --recursive"
+		
+		    checkout([$class: 'GitSCM',
+			    branches: [[name: "${env.PLAYBOOK_REPO_BRANCH}"]],
+			    doGenerateSubmoduleConfigurations: false,
+			    extensions: [[$class: 'RelativeTargetDirectory',
+			    relativeTargetDir: "playbooks"]],
+			    submoduleCfg: [],
+			    userRemoteConfigs:
+			    [[url: "${env.PLAYBOOK_REPO_URL}"]]])
+
+  		    checkout([$class: 'GitSCM',
+			    branches: [[name: "${params.Environment}"]],
+			    doGenerateSubmoduleConfigurations: false,
+			    extensions: [[$class: 'RelativeTargetDirectory',
+			    relativeTargetDir: "${env.REPO_PROJECT}-deployments"]],
+			    submoduleCfg: [],
+			    userRemoteConfigs:
+			    [[url: "${env.DEPLOYMENT_REPO_URL}"]]])
+
+            }
+        }
+
+        stage('Build') {
+            steps {
+                wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                    ansiblePlaybook(
+                        playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
+                        inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
+                        extraVars: [
+                            tier: "${env.TIER}",
+                            project_name: "${env.PROJECT}",
+                            dockerfile_path: "${WORKSPACE}/crdc-popsci-backend/Dockerfile"
+                        ],
+                        colorized: true
+                    )
+                }
+            }
+        }
+
+        stage('Update Deployment Manifest') {
+            steps {
+                script {
+                    if (params.UpdateDeploymentVersion) {
+                        writeDeployment(
+                            version: "${env.BACKEND_TAG}.${BUILD_NUMBER}",
+                            image: "${env.BACKEND_TAG}.${BUILD_NUMBER}",
+                            service: "backend",
+                            deploymentFile: "${env.DEPLOYMENT_FILE}",
+                            deploymentRepoUrl: "${env.DEPLOYMENT_REPO_URL}",
+                            deploymentCheckoutDirectory: "${env.REPO_PROJECT}-deployments"
+                        )
+                    }
+                }
+            }
+        }
+
+        stage('Update Code Tag') {
+            steps {
+                script {
+                    tagRepo(
+                        gitTag: "${env.BACKEND_TAG}",
+                        gitUrl: "https://github.com/CBIIT/crdc-popsci-backend",
+                        checkoutDirectory: "crdc-popsci-backend"
+                    )
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]) {
+                    ansiblePlaybook(
+                        playbook: "${WORKSPACE}/playbooks/${env.DEPLOY_PLAYBOOK}",
+                        inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
+                        extraVars: [
+                            tier: "${env.TIER}",
+                            project_name: "${env.PROJECT}",
+                            subdomain: "popsci",
+                            domain_name: "bento-tools.org",
+                            service: "backend"
+                        ],
+                        colorized: true
+                    )
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            notify(
+                secretPath: "notification/slack",
+                secretName: "bento_slack_url"
+            )
+        }
+
+        cleanup {
+            cleanWs()
+        }
+    }
+}
