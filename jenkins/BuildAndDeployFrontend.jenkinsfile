@@ -109,7 +109,7 @@ pipeline {
                         playbook: "${WORKSPACE}/playbooks/${env.BUILD_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
                         extraVars: [
-                            tier: "${env.TIER}"
+                            tier: "${env.TIER}",
                             project_name: "${env.PROJECT}",
                             dockerfile_path: "${WORKSPACE}/crdc-popsci-ui/Dockerfile"
                         ],
@@ -155,7 +155,7 @@ pipeline {
                         playbook: "${WORKSPACE}/playbooks/${env.DEPLOY_PLAYBOOK}",
                         inventory: "${WORKSPACE}/playbooks/${env.INVENTORY}",
                         extraVars: [
-                            tier: "${env.TIER}"
+                            tier: "${env.TIER}",
                             project_name: "${env.PROJECT}",
                             subdomain: "popsci",
                             domain_name: "bento-tools.org",
