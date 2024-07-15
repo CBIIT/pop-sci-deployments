@@ -70,7 +70,7 @@ pipeline {
 			    userRemoteConfigs:
 			    [[url: "${env.CODE_REPO_URL}"]]])
 
-  		    //sh "cd crdc-popsci-ui && git submodule update --init --recursive"
+  		    sh "cd crdc-popsci-ui && git submodule update --init --recursive"
 		
 		    checkout([$class: 'GitSCM',
 			    branches: [[name: "${env.PLAYBOOK_REPO_BRANCH}"]],
