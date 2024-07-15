@@ -30,14 +30,14 @@
         name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
-        project_name: "popsci"
+        project_name:  "{{project_name}}"
         region: us-east-1
         container_name: "frontend"
         service_name: "{{ project_name }}-{{ tier }}-frontend"
         frontend_version: "{{ lookup('env','FE_VERSION') }}"
         backend_version: "{{ lookup('env','BE_VERSION') }}"
         image_version: "{{ frontend_version }}"
-        tier: "dev"
+        tier: "{{ tier }}"
         execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-execution-role{% else %}{{ project_name }}-{{ tier }}-task-execution-role{% endif %}"
         task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ project_name }}-{{ tier }}-ecs-task-role{% else %}{{ project_name }}-{{ tier }}-task-role{% endif %}"
         ecs_cluster_name: "{{ project_name }}-{{ tier }}-ecs"
