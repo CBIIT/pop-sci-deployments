@@ -6,9 +6,9 @@ services:
     image: 1.0.0-develop.64
     buildNumber: '64'
   frontend:
-    version: mvp.36
-    image: mvp.36
-    buildNumber: '36'
+    version: mvp.37
+    image: mvp.37
+    buildNumber: '37'
   auth:
     version: 2.1.0.23
     image: 2.1.0.23
