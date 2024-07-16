@@ -159,7 +159,7 @@ pipeline {
                             project_name: "${env.PROJECT}",
                             subdomain: "popsci",
                             domain_name: "bento-tools.org",
-                            service: "frontend"
+                            service_name: "frontend"
                         ],
                         colorized: true
                     )
