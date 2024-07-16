@@ -22,10 +22,6 @@ pipeline {
 		    description: 'The image tag to deploy',
 		    name: 'ImageTag')
 
-        booleanParam(
-            defaultValue: true,
-            name: 'UpdateDeploymentVersion'
-        )
     }
 
     options {
