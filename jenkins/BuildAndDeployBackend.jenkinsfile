@@ -61,14 +61,23 @@ pipeline {
         stage('checkout'){
             steps {
 
+		    //checkout([$class: 'GitSCM',
+			//    branches: [[name: "${env.BACKEND_TAG}"]],
+			//    doGenerateSubmoduleConfigurations: false,
+			//    extensions: [[$class: 'RelativeTargetDirectory',
+			//    relativeTargetDir: "crdc-popsci-backend"]],
+			//    submoduleCfg: [],
+			//    userRemoteConfigs:
+			//    [[url: "${env.CODE_REPO_URL}"]]])
+
 		    checkout([$class: 'GitSCM',
-			    branches: [[name: "${env.BACKEND_TAG}"]],
-			    doGenerateSubmoduleConfigurations: false,
-			    extensions: [[$class: 'RelativeTargetDirectory',
-			    relativeTargetDir: "crdc-popsci-backend"]],
-			    submoduleCfg: [],
-			    userRemoteConfigs:
-			    [[url: "${env.CODE_REPO_URL}"]]])
+			branches: [[name: "${env.BACKEND_TAG}"]],
+			extensions: [[$class: 'SubmoduleOption', 
+			recursiveSubmodules: true],
+			[$class: 'RelativeTargetDirectory',
+			relativeTargetDir: "crdc-popsci-backend"]],
+			userRemoteConfigs:
+			[[url: "${env.CODE_REPO_URL}"]]])
 
   		    //sh "cd crdc-popsci-backend && git submodule update --init --recursive"
 		
