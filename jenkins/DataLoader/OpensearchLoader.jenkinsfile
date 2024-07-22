@@ -16,16 +16,17 @@ pipeline {
         defaultValue: 'master',
         name: 'Dataloader_Branch', 
         type: 'PT_BRANCH_TAG',
-        quickFilterEnabled: false, 
+        quickFilterEnabled: true, 
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/crdc-popsci-dataloader')
+        //useRepository: 'https://github.com/CBIIT/crdc-popsci-dataloader')
+        useRepository: 'https://github.com/CBIIT/icdc-dataloader')
     gitParameter(branchFilter: 'origin/(.*)', 
         defaultValue: 'main', 
         name: 'Backend_Branch', 
         type: 'PT_BRANCH_TAG',
-        quickFilterEnabled: false, 
+        quickFilterEnabled: true, 
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
@@ -34,7 +35,7 @@ pipeline {
         defaultValue: 'main',
         name: 'Frontend_Branch', 
         type: 'PT_BRANCH_TAG',
-        quickFilterEnabled: false, 
+        quickFilterEnabled: true, 
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
@@ -43,7 +44,7 @@ pipeline {
             defaultValue: 'main',
             name: 'Model_Branch',
             type: 'PT_BRANCH_TAG',
-            quickFilterEnabled: false,
+            quickFilterEnabled: true,
             selectedValue: 'DEFAULT',
             sortMode: 'ASCENDING_SMART',
             tagFilter: '*',
@@ -65,7 +66,8 @@ pipeline {
   				false, extensions: [], submoduleCfg: [], 
                 recursiveSubmodules: true,
   				userRemoteConfigs: 
-  				[[url: 'https://github.com/CBIIT/crdc-popsci-dataloader']]])
+  				//[[url: 'https://github.com/CBIIT/crdc-popsci-dataloader']]])
+                                [[url: 'https://github.com/CBIIT/icdc-dataloader']]])
 
 			checkout([$class: 'GitSCM',
 				branches: [[name: "${params.Frontend_Branch}"]],
