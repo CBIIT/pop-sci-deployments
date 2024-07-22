@@ -20,7 +20,7 @@ pipeline {
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/icdc-dataloader')
+        useRepository: 'https://github.com/CBIIT/crdc-popsci-dataloader')
     gitParameter(branchFilter: 'origin/(.*)', 
         defaultValue: 'main', 
         name: 'Backend_Branch', 
@@ -29,7 +29,7 @@ pipeline {
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/popsci-backend')
+        useRepository: 'https://github.com/CBIIT/crdc-popsci-backend')
     gitParameter(branchFilter: 'origin/(.*)', 
         defaultValue: 'main',
         name: 'Frontend_Branch', 
@@ -38,7 +38,7 @@ pipeline {
         selectedValue: 'DEFAULT', 
         sortMode: 'ASCENDING_SMART', 
         tagFilter: '*', 
-        useRepository: 'https://github.com/CBIIT/bento-popsci-frontend')
+        useRepository: 'https://github.com/CBIIT/crdc-popsci-ui')
     gitParameter(branchFilter: 'origin/(.*)',
             defaultValue: 'main',
             name: 'Model_Branch',
@@ -65,7 +65,7 @@ pipeline {
   				false, extensions: [], submoduleCfg: [], 
                 recursiveSubmodules: true,
   				userRemoteConfigs: 
-  				[[url: 'https://github.com/CBIIT/icdc-dataloader']]])
+  				[[url: 'https://github.com/CBIIT/crdc-popsci-dataloader']]])
 
 			checkout([$class: 'GitSCM',
 				branches: [[name: "${params.Frontend_Branch}"]],
@@ -74,7 +74,7 @@ pipeline {
 				relativeTargetDir: 'popsci-frontend']],
 				submoduleCfg: [],
 				userRemoteConfigs: 
-				[[url: 'https://github.com/CBIIT/bento-popsci-frontend']]])
+				[[url: 'https://github.com/CBIIT/crdc-popsci-ui']]])
 			
 			checkout([$class: 'GitSCM',
 				branches: [[name: "${params.Backend_Branch}"]],
@@ -83,7 +83,7 @@ pipeline {
 				relativeTargetDir: 'popsci-backend']],
 				submoduleCfg: [],
 				userRemoteConfigs: 
-				[[url: 'https://github.com/CBIIT/popsci-backend']]])
+				[[url: 'https://github.com/CBIIT/crdc-popsci-backend']]])
             
 			dir('popsci-model'){
                 git branch: "${params.Model_Branch}",
