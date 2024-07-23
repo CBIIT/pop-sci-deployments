@@ -21,7 +21,7 @@ git clone https://github.com/CBIIT/pop-sci-deployments.git
 4. go to the repo folder and make sure you are on the correct branch:
 
 ```
-cd bento-deployments
+cd pop-sci-deployments
 git checkout main
 cd terraform
 ```
