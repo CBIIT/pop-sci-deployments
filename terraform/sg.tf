@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "opensearch_inbound" {
   from_port         = local.https_port
   protocol          = local.tcp_protocol
   to_port           = local.https_port
-  security_group_id = module.opensearch[count.index].opensearch_security_group_id
+  security_group_id = module.opensearch.opensearch_security_group_id
   type              = "ingress"
   cidr_blocks       = local.nih_cidrs
 }
@@ -64,6 +64,6 @@ resource "aws_security_group_rule" "opensearch_outbound" {
   protocol          = local.any_protocol
   to_port           = local.any_port
   cidr_blocks       = local.all_ips
-  security_group_id = module.opensearch[count.index].opensearch_security_group_id
+  security_group_id = module.opensearch.opensearch_security_group_id
   type              = "egress"
 }
