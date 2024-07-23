@@ -1,7 +1,6 @@
 # ALB
 module "alb" {
-  source              = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/loadbalancer?ref=v1.9"
-  resource_prefix     = "${var.program}-${terraform.workspace}-${var.project}"
+  source              = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/loadbalancer?ref=v1.19"
   vpc_id              = var.vpc_id
   env                 = terraform.workspace
   alb_internal        = var.internal_alb
@@ -9,15 +8,15 @@ module "alb" {
   alb_subnet_ids      = local.alb_subnet_ids
   tags                = var.tags
   stack_name          = var.project
-  program             = "crdc"
   alb_certificate_arn = data.aws_acm_certificate.amazon_issued.arn
+  program             = "crdc"
+  resource_prefix     = "${var.program}-${terraform.workspace}-${var.project}"
 }
 
 # ECS
 module "ecs" {
-  source                    = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/ecs?ref=v1.9"
+  source                    = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/ecs?ref=v1.19"
   stack_name                = var.project
-  resource_prefix           = "${var.program}-${terraform.workspace}-${var.project}"
   tags                      = var.tags
   vpc_id                    = var.vpc_id
   add_opensearch_permission = var.add_opensearch_permission
@@ -29,11 +28,12 @@ module "ecs" {
   target_account_cloudone   = var.target_account_cloudone
   allow_cloudwatch_stream   = var.allow_cloudwatch_stream
   central_ecr_account_id    = var.central_ecr_account_id
+  resource_prefix           = "${var.program}-${terraform.workspace}-${var.project}"
 }
 
 # Monitoring
 module "monitoring" {
-  source               = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/monitoring?ref=v1.9"
+  source               = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/monitoring?ref=v1.19"
   app                  = var.project
   tags                 = var.tags
   sumologic_access_id  = var.sumologic_access_id
@@ -49,7 +49,7 @@ module "monitoring" {
 # Newrelic
 module "new_relic_metric_pipeline" {
   count                    = var.create_newrelic_pipeline ? 1 : 0
-  source                   = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/firehose-metrics?ref=v1.9"
+  source                   = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/firehose-metrics?ref=v1.19"
   account_id               = data.aws_caller_identity.current.account_id
   app                      = var.project
   http_endpoint_access_key = var.newrelic_api_key
@@ -63,23 +63,16 @@ module "new_relic_metric_pipeline" {
 
 # Opensearch
 module "opensearch" {
-  source                            = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/opensearch?ref=v1.9"
-  stack_name                        = var.project
-  resource_prefix                   = "${var.program}-${terraform.workspace}-${var.project}"
-  tags                              = var.tags
-  opensearch_instance_type          = var.opensearch_instance_type
-  env                               = terraform.workspace
-  opensearch_subnet_ids             = var.private_subnet_ids
-  opensearch_version                = var.opensearch_version
-  automated_snapshot_start_hour     = var.automated_snapshot_start_hour
-  opensearch_ebs_volume_size        = var.opensearch_ebs_volume_size
-  opensearch_instance_count         = var.opensearch_instance_count
-  opensearch_log_types              = ["INDEX_SLOW_LOGS"]
-  create_os_service_role            = var.create_os_service_role
-  multi_az_enabled                  = var.multi_az_enabled
-  vpc_id                            = var.vpc_id
-  opensearch_autotune_rollback_type = "NO_ROLLBACK"
-  create_cloudwatch_log_policy      = var.create_cloudwatch_log_policy
+  source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/opensearch?ref=v1.19"
+  tags                          = var.tags
+  cluster_tshirt_size           = var.cluster_tshirt_size
+  subnet_ids                    = var.private_subnet_ids
+  engine_version                = var.opensearch_version
+  automated_snapshot_start_hour = var.automated_snapshot_start_hour
+  vpc_id                        = var.vpc_id
+  create_cloudwatch_log_policy  = var.create_cloudwatch_log_policy
+  create_snapshot_role          = var.create_snapshot_role
+  resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
 }
 
 # Secrets
@@ -92,7 +85,7 @@ module "deepmerge" {
 }
 
 module "secrets" {
-  source        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/secrets?ref=main"
+  source        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/secrets?ref=v1.19"
   app           = var.project
   secret_values = module.deepmerge.merged
   #secret_values = var.secret_values
@@ -101,7 +94,7 @@ module "secrets" {
 #S3 bucket for storing OpenSearch Snapshots
 module "s3_ossnapshot" {
   count                         = terraform.workspace == "stage" ? 1 : 0
-  source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=main"
+  source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
   bucket_name                   = local.s3_snapshot_bucket_name
   resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
   env                           = terraform.workspace

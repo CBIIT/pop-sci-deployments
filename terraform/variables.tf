@@ -167,6 +167,13 @@ variable "create_os_service_role" {
   description = "change this value to true if running this script for the first time"
 }
 
+variable "create_snapshot_role" {
+  type        = bool
+  description = "Whether to allow the opensearch module to create the snapshot role for the OpenSearch domain"
+  default     = false
+  sensitive   = false
+}
+
 variable "multi_az_enabled" {
   description = "set to true to enable multi-az deployment"
   type        = bool
