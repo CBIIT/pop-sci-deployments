@@ -25,8 +25,6 @@ module "ecs" {
   env                       = terraform.workspace
   microservices             = var.microservices
   alb_https_listener_arn    = module.alb.alb_https_listener_arn
-  target_account_cloudone   = var.target_account_cloudone
-  allow_cloudwatch_stream   = var.allow_cloudwatch_stream
   central_ecr_account_id    = var.central_ecr_account_id
   resource_prefix           = "${var.program}-${terraform.workspace}-${var.project}"
 }
@@ -39,7 +37,6 @@ module "monitoring" {
   sumologic_access_id  = var.sumologic_access_id
   sumologic_access_key = var.sumologic_access_key
   microservices        = var.microservices
-  service              = var.service
   program              = var.program
   newrelic_account_id  = var.newrelic_account_id
   newrelic_api_key     = var.newrelic_api_key
@@ -99,7 +96,7 @@ module "s3_ossnapshot" {
   resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
   env                           = terraform.workspace
   tags                          = var.tags
-  s3_force_destroy              = var.s3_force_destroy
+  s3_force_destroy              = true
   days_for_archive_tiering      = 125
   days_for_deep_archive_tiering = 180
   s3_enable_access_logging      = false
