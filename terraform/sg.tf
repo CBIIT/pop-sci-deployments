@@ -59,11 +59,11 @@ resource "aws_security_group_rule" "opensearch_inbound" {
 }
 
 #create opensearch egres rule
-resource "aws_security_group_rule" "opensearch_outbound" {
-  from_port         = local.any_port
-  protocol          = local.any_protocol
-  to_port           = local.any_port
-  cidr_blocks       = local.all_ips
-  security_group_id = module.opensearch.security_group_id
-  type              = "egress"
-}
+#resource "aws_security_group_rule" "opensearch_outbound" {
+#  from_port         = local.any_port
+#  protocol          = local.any_protocol
+#  to_port           = local.any_port
+#  cidr_blocks       = local.all_ips
+#  security_group_id = module.opensearch.security_group_id
+#  type              = "egress"
+#}
