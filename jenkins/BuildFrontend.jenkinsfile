@@ -196,7 +196,7 @@ pipeline {
                         version: "${env.CODE_BRANCH}.${BUILD_NUMBER}",
                         image:  "${env.CODE_BRANCH}.${BUILD_NUMBER}",
                         service: "${env.SERVICE}",
-                        deploymentFile: "${pop-sci-deployments/deployments.yaml",
+                        deploymentFile: "pop-sci-deployments/deployments.yaml",
                         deploymentRepoUrl: "https://github.com/CBIIT/${env.DEPLOY_REPO}",
                         deploymentCheckoutDirectory: "pop-sci-deployments"
                     )
