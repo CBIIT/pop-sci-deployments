@@ -9,18 +9,11 @@
     - name: install aws collection
       shell: "ansible-galaxy collection install {{ item | quote }} --force"
       loop:
-        - community.docker:<=3.4.3
-        - amazon.aws:<=5.4.0
-
-      #command: ansible-galaxy collection install {{item}}
-      #loop:
-      #  - community.docker
-      #  - amazon.aws
-
-        - community.aws:<=3.2.0
+       # - community.docker:<=3.4.3
+       # - amazon.aws:<=5.4.0
+       # - community.aws:<=3.2.0
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,v1.0
-        #- git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,popsci-extra
-
+     
     #docker login
     - name: docker login
       include_role:
