@@ -52,7 +52,7 @@ pipeline {
 			relativeTargetDir: "playbooks"]],
 			submoduleCfg: [],
 			userRemoteConfigs:
-			[[url: 'https://github.com/CBIIT/popsci-deployments']]])
+			[[url: 'https://github.com/CBIIT/pop-sci-deployments']]])
 
         checkout([$class: 'GitSCM',
 			branches: [[name: "${params.Environment}"]],
@@ -61,7 +61,7 @@ pipeline {
 			relativeTargetDir: "${env.PROJECT}-deployments"]],
 			submoduleCfg: [],
 			userRemoteConfigs:
-			[[url: 'https://github.com/CBIIT/popsci-deployments']]])
+			[[url: 'https://github.com/CBIIT/pop-sci-deployments']]])
 
         }
 
