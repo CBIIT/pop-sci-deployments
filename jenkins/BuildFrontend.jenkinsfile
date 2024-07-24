@@ -49,10 +49,10 @@ pipeline {
 
       PROJECT      = "popsci"
 	  SERVICE      = "frontend"
-      ECR_REPO     = "crdc-${env.PROJECT}-ui"
+      ECR_REPO     = "crdc-${env.PROJECT}-${env.SERVICE}"
 	  DEPLOY_JOB   = "DeployFrontend"
 	  SLACK_SECRET = "popsci_slack_url"
-	  CODE_REPO    = "crdc-${env.PROJECT}-${env.SERVICE}"
+	  CODE_REPO    = "crdc-${env.PROJECT}-ui"
 	  JOB_PATH     = "_default/_lower/POPSCI/_jobs"
 	  REGION       = "us-east-1"
 	  DEPLOY_REPO  = "pop-sci-deployments"
