@@ -32,11 +32,11 @@ pipeline {
 
       PROJECT      = 'popsci'
 	  APP          = "backend"
-	  ENV          = "${params.Environment}"
-	  CLUSTER      = "${env.PROJECT}-${env.ENV}-ecs" 
-	  SERVICE      = "${env.PROJECT}-${env.ENV}-${env.APP}"
 	  REGION       = "us-east-1"
 	  PROGRAM      = "crdc"
+          ENV          = "${params.Environment}"
+	  CLUSTER      = "${env.PROGRAM}-${env.ENV}-${env.PROJECT}-ecs" 
+	  SERVICE      = "${env.PROGRAM}-${env.ENV}-${env.PROJECT}-${env.APP}"
       ECR_REPO     = "${env.PROGRAM}-${env.PROJECT}-${env.APP}"
 	  IMAGE_TAG    = "${params.BackendTag}"
 	  
