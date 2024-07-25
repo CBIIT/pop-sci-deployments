@@ -150,7 +150,7 @@ pipeline {
 						auth_enabled: false
 						],
                     colorized: true,
-                    extras: '-vvv'))
+                    extras: '-vvv')
  			}
  		}
 
