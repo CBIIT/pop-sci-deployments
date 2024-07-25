@@ -182,7 +182,7 @@ pipeline {
     always {
 
         notify(
-            secretPath: "notifications/slack",
+            secretPath: "notification/slack",
             secretName: "popsci_slack_url"
         ) 
 
