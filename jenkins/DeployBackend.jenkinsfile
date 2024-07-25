@@ -149,7 +149,8 @@ pipeline {
 						domain_name: "datacommons.cancer.gov",
 						auth_enabled: false
 						],
-                    colorized: true)
+                    colorized: true,
+                    extras: '-vvv'))
  			}
  		}
 
