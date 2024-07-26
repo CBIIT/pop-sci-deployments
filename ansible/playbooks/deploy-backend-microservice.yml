@@ -30,8 +30,6 @@
         name: bento.common.ecs
       vars:
         ansible_python_interpreter: /usr/bin/python3
-        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}-ecs-task-execution-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-execution-role{% endif %}"
-        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}}-ecs-task-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-role{% endif %}"
         project_name: "{{project_name}}"
         service_name: "{{ program }}-{{ tier }}-{{ project_name }}-backend"
         iam_prefix: "power-user"
@@ -42,6 +40,8 @@
         auth_enabled: "true"
         image_version: "{{ lookup('env','BE_VERSION') }}"
         tier: "{{ lookup('env','TIER') }}"
+        execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}-ecs-task-execution-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-execution-role{% endif %}"
+        task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}-ecs-task-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-role{% endif %}"
         ecs_cluster_name: "{{ program }}-{{ tier }}-{{ project_name }}-ecs"
         #neo4j_user: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_user', nested=true, region='us-east-1' ) }}"
         #neo4j_ip: "{{ lookup('amazon.aws.aws_secret', 'bento/{{ project_name }}/{{ tier }}.neo4j_ip', nested=true, region='us-east-1' ) }}"
