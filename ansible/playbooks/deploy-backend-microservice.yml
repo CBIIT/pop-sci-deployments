@@ -17,11 +17,11 @@
         - git+https://github.com/CBIIT/datacommons-devops.git#/ansible/collections/bento/common/,v1.19
 
     #docker login
-    - name: docker login
-      include_role:
-        name: bento.common.ecr_login
-      vars:
-        region: us-east-1
+    #- name: docker login
+      #include_role:
+       # name: bento.common.ecr_login
+      #vars:
+       # region: us-east-1
 
 
     #deploy backend
@@ -40,6 +40,7 @@
         auth_enabled: "true"
         image_version: "{{ lookup('env','BE_VERSION') }}"
         tier: "{{ lookup('env','TIER') }}"
+        ecr_repo: "{{ lookup('env','REGISTRY_URL') }}"
         execution_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}-ecs-task-execution-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-execution-role{% endif %}"
         task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}-ecs-task-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-role{% endif %}"
         ecs_cluster_name: "{{ program }}-{{ tier }}-{{ project_name }}-ecs"
