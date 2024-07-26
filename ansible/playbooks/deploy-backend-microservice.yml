@@ -34,6 +34,7 @@
         task_role: "{% if iam_prefix is defined and iam_prefix != '' %}{{ iam_prefix }}-{{ program }}-{{ tier }}-{{ project_name }}}-ecs-task-role{% else %}{{ program }}-{{ tier }}-{{ project_name }}-task-role{% endif %}"
         project_name: "{{project_name}}"
         service_name: "{{ program }}-{{ tier }}-{{ project_name }}-backend"
+        iam_prefix: "power-user"
         program: "crdc"
         platform: aws
         region: us-east-1

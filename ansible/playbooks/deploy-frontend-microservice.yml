@@ -34,6 +34,7 @@
         program: "crdc"
         region: us-east-1
         container_name: "frontend"
+        iam_prefix: "power-user"
         service_name: "{{ program }}-{{ tier }}-{{ project_name }}-frontend"
         frontend_version: "{{ lookup('env','FE_VERSION') }}"
         backend_version: "{{ lookup('env','BE_VERSION') }}"
