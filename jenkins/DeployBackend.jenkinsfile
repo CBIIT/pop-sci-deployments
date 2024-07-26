@@ -34,7 +34,7 @@ pipeline {
 	  APP          = "backend"
 	  REGION       = "us-east-1"
 	  PROGRAM      = "crdc"
-          ENV          = "${params.Environment}"
+      ENV          = "${params.Environment}"
 	  CLUSTER      = "${env.PROGRAM}-${env.ENV}-${env.PROJECT}-ecs" 
 	  SERVICE      = "${env.PROGRAM}-${env.ENV}-${env.PROJECT}-${env.APP}"
       ECR_REPO     = "${env.PROGRAM}-${env.PROJECT}-${env.APP}"
