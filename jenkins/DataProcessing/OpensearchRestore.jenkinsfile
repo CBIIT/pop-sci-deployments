@@ -3,9 +3,9 @@ import groovy.json.JsonOutput
 
 def getLabelForEnvironment(environment) {
 	if (environment == "stage" || environment == "prod"){
-		return "slave-ncias-s2979-c"
+		return ""
 	}else {
-		return "slave-ncias-d2943-c"
+		return "slave-ncias-q2944-c"
 	}
 }
 
