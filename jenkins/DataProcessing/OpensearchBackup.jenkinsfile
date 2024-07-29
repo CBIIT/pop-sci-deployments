@@ -63,7 +63,7 @@ pipeline {
           extensions: [[$class: 'DisableRemotePoll'],
           [$class: 'PathRestriction', excludedRegions: '*'], 
           [$class: 'RelativeTargetDirectory', 
-          relativeTargetDir: "${env.PROJECT}-deployments"]],
+          relativeTargetDir: "pop-sci-deployments"]],
           submoduleCfg: [], 
           userRemoteConfigs:
           [[url: "https://github.com/CBIIT/${env.DEPLOY_REPO}"]]])
@@ -91,8 +91,8 @@ pipeline {
  		  steps{
         wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]){
              ansiblePlaybook( 
-                playbook: '${WORKSPACE}/playbooks/ansible/playbooks/opensearchbackup.yml',
-                inventory: '${WORKSPACE}/playbooks/ansible/playbooks/hosts',
+                playbook: '${WORKSPACE}/pop-sci-deployments/ansible/playbooks/opensearchbackup.yml',
+                inventory: '${WORKSPACE}/pop-sci-deployments/ansible/playbooks/hosts',
                 extraVars: [
                     role_arn: "arn:aws:iam::${AWS_ACCOUNT}:role/power-user-crdc-dev-popsci-opensearch-snapshot"
                     ],
