@@ -63,7 +63,7 @@ pipeline {
           extensions: [[$class: 'DisableRemotePoll'],
           [$class: 'PathRestriction', excludedRegions: '*'], 
           [$class: 'RelativeTargetDirectory', 
-          relativeTargetDir: "$pop-sci-deployments"]],
+          relativeTargetDir: "pop-sci-deployments"]],
           submoduleCfg: [], 
           userRemoteConfigs:
           [[url: "https://github.com/CBIIT/${env.DEPLOY_REPO}"]]])
