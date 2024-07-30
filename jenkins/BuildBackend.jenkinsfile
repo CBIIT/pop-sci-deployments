@@ -53,7 +53,7 @@ pipeline {
 	  REGION       = "us-east-1"
 	  DEPLOY_REPO  = "pop-sci-deployments"
       CODE_BRANCH  = "${params.CodeBranch}"
-      CODE_FOLDER  = "${env.PROJECT}-${env.SERVICE}"
+      CODE_FOLDER  = "crdc-${env.PROJECT}-${env.SERVICE}"
       ENV          = "${params.Environment}"
 
   }
