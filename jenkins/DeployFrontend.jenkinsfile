@@ -132,7 +132,7 @@ pipeline {
 
 	    environment {
             FE_VERSION = "${params.FrontendTag}"
-            BE_VERSION = getVersion(service: "backend",deploymentFile: "${PROJECT}-deployments/deployments.yaml")
+            BE_VERSION = getVersion(service: "backend",deploymentFile: "pop-sci-deployments/deployments.yaml")
         }
 
  		steps {
