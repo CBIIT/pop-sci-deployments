@@ -6,9 +6,9 @@ services:
     image: MVP.10
     buildNumber: '10'
   frontend:
-    version: mvp.14
-    image: mvp.14
-    buildNumber: '14'
+    version: mvp.15
+    image: mvp.15
+    buildNumber: '15'
   auth:
     version: 2.1.0.23
     image: 2.1.0.23
