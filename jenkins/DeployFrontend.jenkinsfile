@@ -58,7 +58,7 @@ pipeline {
 			branches: [[name: "${params.Environment}"]],
 			doGenerateSubmoduleConfigurations: false,
 			extensions: [[$class: 'RelativeTargetDirectory',
-			relativeTargetDir: "${env.PROJECT}-deployments"]],
+			relativeTargetDir: "pop-sci-deployments"]],
 			submoduleCfg: [],
 			userRemoteConfigs:
 			[[url: 'https://github.com/CBIIT/pop-sci-deployments']]])
