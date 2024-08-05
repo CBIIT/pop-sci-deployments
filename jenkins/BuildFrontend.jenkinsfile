@@ -234,7 +234,7 @@ pipeline {
     always {
 
         notify(
-            secretPath: "notifications/slack",
+            secretPath: "notification/slack",
             secretName: "${env.SLACK_SECRET}"
         ) 
 
