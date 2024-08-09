@@ -216,3 +216,42 @@ variable "secret_values" {
     description = string
   }))
 }
+
+#CloudFront
+variable "create_cloudfront" {
+  description = "create cloudfront or not"
+  type = bool
+  default = false
+}
+
+variable "alarms" {
+  description = "alarms to be configured"
+  type = map(map(string))
+}
+
+variable "slack_secret_name" {
+  type = string
+  description = "name of cloudfront slack secret"
+}
+
+variable "cloudfront_slack_channel_name" {
+  type = string
+  description = "cloudfront slack name"
+}
+
+variable "create_files_bucket" {
+  description = "indicate if you want to create files bucket or use existing one"
+  type = bool
+  default = false
+}
+
+variable "stack_name" {
+  description = "name of the project"
+  type = string
+}
+
+variable "target_account_cloudone"{
+  description = "to add check conditions on whether the resources are brought up in cloudone or not"
+  type        = bool
+  default =   false
+}
