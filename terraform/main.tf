@@ -120,3 +120,18 @@ module "cloudfront" {
   target_account_cloudone = var.target_account_cloudone
   public_key_path = file("${path.module}/workspace/icdc_public_key.pem")
 }
+
+#s3 for CloudFront Dedicated bucket
+module "s3" {
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=lifecycle_s3"
+  bucket_name = var.bucket_name
+  stack_name = var.stack_name
+  create_bucket_acl = var.create_bucket_acl
+  env = terraform.workspace
+  tags = var.tags
+  s3_force_destroy = var.s3_force_destroy
+  days_for_archive_tiering = 125
+  days_for_deep_archive_tiering = 180
+  s3_enable_access_logging = false
+  s3_access_log_bucket_id = ""
+}

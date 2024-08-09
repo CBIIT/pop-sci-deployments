@@ -255,3 +255,20 @@ variable "target_account_cloudone"{
   type        = bool
   default =   false
 }
+
+#S3 for CloudFront
+variable "bucket_name" {
+  description = "cloudfront s3 bucket name"
+  type = string
+  default = ""
+}
+variable "create_bucket_acl" {
+  description = "create bucket acl or not"
+  type = bool
+}
+
+variable "s3_force_destroy" {
+  description = "force destroy bucket"
+  default = true
+  type = bool
+}
