@@ -2,9 +2,9 @@ Notes: Jenkins pipeline
 project: popsci
 services:
   backend:
-    version: MVP.26
-    image: MVP.26
-    buildNumber: '26'
+    version: MVP.27
+    image: MVP.27
+    buildNumber: '27'
   frontend:
     version: mvp.24
     image: mvp.24
