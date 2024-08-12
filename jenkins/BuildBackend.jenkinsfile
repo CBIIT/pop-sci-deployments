@@ -134,9 +134,6 @@ pipeline {
 
  			script {
 
-				// Clean up workspace before running tests
-			    cleanWs()
-
 			    sh label: 'Trivy-Test', script: '''#!/bin/bash
 
 				# Test image for vulnerabilities
