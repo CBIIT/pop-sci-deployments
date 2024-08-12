@@ -107,7 +107,8 @@ pipeline {
 
   	}
 
-	steps {
+	/*stage('Cleanup Disk Space') {
+        steps {
             script {
                 sh label: 'Clear Disk Space', script: '''#!/bin/bash
                 echo "Cleaning up disk space"
@@ -135,7 +136,7 @@ pipeline {
                 '''
             }
         }
-    }
+    }*/
 
 	stage('Build'){
 
