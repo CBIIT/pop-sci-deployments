@@ -128,7 +128,7 @@ pipeline {
 
   	}
 
-  	/*stage('Test'){
+  	stage('Test'){
 
 		steps {
 
@@ -148,7 +148,7 @@ pipeline {
 
  		}
 
-  	}*/
+  	}
 
   	stage('push to ECR'){
 
