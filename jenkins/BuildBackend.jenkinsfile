@@ -134,6 +134,12 @@ pipeline {
 
  			script {
 
+				sh label: 'Clear /tmp Directory', script: '''#!/bin/bash
+                echo "Clearing /tmp directory to free up space"
+                sudo rm -rf /tmp/*
+                echo "Cleared /tmp directory"
+                '''
+
 			    sh label: 'Trivy-Test', script: '''#!/bin/bash
 
 				# Test image for vulnerabilities
