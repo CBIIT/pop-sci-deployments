@@ -113,7 +113,7 @@ module "cloudfront" {
   cloudfront_distribution_bucket_name = module.s3.bucket_name
   cloudfront_slack_channel_name =  var.cloudfront_slack_channel_name
   env = terraform.workspace
-  stack_name = var.stack_name
+  #stack_name = var.stack_name
   slack_secret_name = var.slack_secret_name
   tags = var.tags
   create_files_bucket = var.create_files_bucket
@@ -124,10 +124,10 @@ module "cloudfront" {
 #s3 for CloudFront Dedicated bucket
 module "s3" {
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
-  resource_prefix     = "${var.stack_name}-${terraform.workspace}"
+  resource_prefix     = "${var.project}-${terraform.workspace}"
   bucket_name = var.bucket_name
-  stack_name = var.stack_name
-  create_bucket_acl = var.create_bucket_acl
+  #stack_name = var.stack_name
+  #create_bucket_acl = var.create_bucket_acl
   env = terraform.workspace
   tags = var.tags
   s3_force_destroy = var.s3_force_destroy
