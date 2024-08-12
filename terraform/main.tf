@@ -60,7 +60,7 @@ module "new_relic_metric_pipeline" {
 }
 
 # Opensearch
-/*module "opensearch" {
+module "opensearch" {
   source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/opensearch?ref=v1.19"
   tags                          = var.tags
   cluster_tshirt_size           = var.cluster_tshirt_size
@@ -71,7 +71,7 @@ module "new_relic_metric_pipeline" {
   create_cloudwatch_log_policy  = var.create_cloudwatch_log_policy
   create_snapshot_role          = var.create_snapshot_role
   resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
-}*/
+}
 
 # Secrets
 module "deepmerge" {
