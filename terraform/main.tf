@@ -113,7 +113,7 @@ module "cloudfront" {
   cloudfront_distribution_bucket_name = module.s3.bucket_name
   cloudfront_slack_channel_name =  var.cloudfront_slack_channel_name
   env = terraform.workspace
-  #stack_name = var.stack_name
+  stack_name = var.stack_name
   slack_secret_name = var.slack_secret_name
   tags = var.tags
   create_files_bucket = var.create_files_bucket

@@ -248,6 +248,7 @@ variable "create_files_bucket" {
 variable "stack_name" {
   description = "name of the project"
   type = string
+  default = "popsci"
 }
 
 variable "target_account_cloudone"{
