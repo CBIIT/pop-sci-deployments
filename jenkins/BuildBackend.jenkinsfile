@@ -128,6 +128,37 @@ pipeline {
 
   	}
 
+	stage('Cleanup Disk Space') {
+        steps {
+            script {
+                sh label: 'Clear Disk Space', script: '''#!/bin/bash
+                echo "Cleaning up disk space"
+                
+                # Remove all stopped containers
+                docker container prune -f
+                
+                # Remove all unused images
+                docker image prune -a -f
+                
+                # Remove all unused volumes
+                docker volume prune -f
+                
+                # Remove all unused networks
+                docker network prune -f
+                
+                # Clean up orphaned docker resources
+                docker system prune -a -f --volumes
+                
+                # Clean up specific temp files (optional)
+                # rm -rf /tmp/*
+                
+                # Display disk space usage
+                df -h
+                '''
+            }
+        }
+    }
+
   	stage('Test'){
 
 		steps {
