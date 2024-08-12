@@ -107,27 +107,6 @@ pipeline {
 
   	}
 
-	stage('Build'){
-
- 		steps {
-
- 			script {
-
-			    sh label: 'Docker-Build', script: '''#!/bin/bash
-
-				# build Docker container
-				echo "Building: $ECR_REPO:$CODE_BRANCH.$BUILD_NUMBER"
-
-				cd $WORKSPACE/$CODE_FOLDER && DOCKER_BUILDKIT=1 docker build --no-cache -t $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER .
-
-				'''
-
-			}
-
- 		}
-
-  	}
-
 	stage('Cleanup Disk Space') {
         steps {
             script {
@@ -158,6 +137,27 @@ pipeline {
             }
         }
     }
+
+	stage('Build'){
+
+ 		steps {
+
+ 			script {
+
+			    sh label: 'Docker-Build', script: '''#!/bin/bash
+
+				# build Docker container
+				echo "Building: $ECR_REPO:$CODE_BRANCH.$BUILD_NUMBER"
+
+				cd $WORKSPACE/$CODE_FOLDER && DOCKER_BUILDKIT=1 docker build --no-cache -t $REPO_URL:$CODE_BRANCH.$BUILD_NUMBER .
+
+				'''
+
+			}
+
+ 		}
+
+  	}
 
   	stage('Test'){
 
