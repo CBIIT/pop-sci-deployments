@@ -124,7 +124,7 @@ module "cloudfront" {
 
 #s3 for CloudFront Dedicated bucket
 module "s3" {
-  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.18"
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
   resource_prefix     = "${var.project}-${terraform.workspace}"
   bucket_name = var.bucket_name
   #stack_name = var.stack_name
