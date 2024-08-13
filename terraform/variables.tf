@@ -263,11 +263,11 @@ variable "bucket_name" {
   type = string
   default = ""
 }
-variable "create_bucket_acl" {
+/*variable "create_bucket_acl" {
   description = "create bucket acl or not"
   type = bool
   default = true
-}
+}*/
 
 variable "s3_force_destroy" {
   description = "force destroy bucket"
