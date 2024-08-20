@@ -25,7 +25,7 @@ locals {
   #ALB
   #allowed_alb_ip_range = terraform.workspace == "prod" || terraform.workspace == "stage" ?  local.all_ips : local.nih_ip_cidrs
   allowed_alb_ip_range = local.nih_ip_cidrs
-  alb_subnet_ids       = terraform.workspace == "prod" || terraform.workspace == "stage" ? var.public_subnet_ids : var.private_subnet_ids
+  alb_subnet_ids       = terraform.workspace == "prod" ? var.public_subnet_ids : var.private_subnet_ids
   alb_log_bucket_name  = terraform.workspace == "prod" || terraform.workspace == "stage" ? "prod-alb-access-logs" : "nonprod-alb-access-logs"
   cert_types           = "IMPORTED"
 
