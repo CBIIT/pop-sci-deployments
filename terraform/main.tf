@@ -91,7 +91,7 @@ module "secrets" {
 }
 
 #S3 bucket for storing OpenSearch Snapshots
-module "s3_ossnapshot" {
+/*module "s3_ossnapshot" {
   count                         = terraform.workspace == "stage" ? 1 : 0
   source                        = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
   bucket_name                   = local.s3_snapshot_bucket_name
@@ -103,10 +103,10 @@ module "s3_ossnapshot" {
   days_for_deep_archive_tiering = 180
   s3_enable_access_logging      = false
   s3_access_log_bucket_id       = ""
-}
+}*/
 
 #CloudFront
-/*module "cloudfront" {
+module "cloudfront" {
   count = var.create_cloudfront ? 1 : 0
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront?ref=cloudfront_no_kenesis"
   #resource_prefix     = "${var.project}-${terraform.workspace}"
@@ -121,10 +121,10 @@ module "s3_ossnapshot" {
   create_files_bucket = var.create_files_bucket
   target_account_cloudone = var.target_account_cloudone
   public_key_path = file("${path.module}/workspace/popsci_public_key.pem")
-}*/
+}
 
 #s3 for CloudFront Dedicated bucket
-/*module "s3" {
+module "s3" {
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
   resource_prefix     = "${var.project}-${terraform.workspace}"
   bucket_name = var.bucket_name
@@ -137,4 +137,4 @@ module "s3_ossnapshot" {
   days_for_deep_archive_tiering = 180
   s3_enable_access_logging = false
   s3_access_log_bucket_id = ""
-}*/
+}
