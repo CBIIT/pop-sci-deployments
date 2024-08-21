@@ -192,11 +192,6 @@ variable "s3_opensearch_snapshot_bucket" {
   sensitive   = false
 }
 
-variable "create_opensearch_cluster" {
-  description = "choose to create opensearch cluster or not"
-  type = bool
-  default = false
-}
 
 # S3
 variable "alb_logging_account_id" {
