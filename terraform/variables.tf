@@ -163,7 +163,7 @@ variable "create_cloudwatch_log_policy" {
 
 variable "create_os_service_role" {
   type        = bool
-  default     = false
+  default     = true
   description = "change this value to true if running this script for the first time"
 }
 

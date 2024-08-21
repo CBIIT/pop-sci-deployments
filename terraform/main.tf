@@ -74,6 +74,7 @@ module "opensearch" {
   resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
 }
 
+
 # Secrets
 module "deepmerge" {
   source = "Invicton-Labs/deepmerge/null"
