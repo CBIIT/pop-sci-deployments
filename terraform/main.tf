@@ -124,7 +124,7 @@ module "cloudfront" {
 }
 
 #s3 for CloudFront Dedicated bucket
-module "s3" {
+/*module "s3" {
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
   resource_prefix     = "${var.project}-${terraform.workspace}"
   bucket_name = var.bucket_name
@@ -137,4 +137,4 @@ module "s3" {
   days_for_deep_archive_tiering = 180
   s3_enable_access_logging = false
   s3_access_log_bucket_id = ""
-}
+}*/
