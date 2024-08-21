@@ -35,7 +35,7 @@ locals {
   fargate_security_group_ports = ["443"]
 
   # S3
-  s3_snapshot_bucket_name = "opensearch-snapshot-bucket"
+  s3_snapshot_bucket_name = "opensearch-prod-snapshot-bucket"
   s3_neo4j_bucket_name    = "neo4j-data-dump"
 
   # Secrets
