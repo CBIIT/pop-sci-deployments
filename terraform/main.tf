@@ -108,7 +108,7 @@ module "secrets" {
 #CloudFront
 module "cloudfront" {
   count = var.create_cloudfront ? 1 : 0
-  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront?ref=cloudfront_no_kenesi"
+  source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/cloudfront?ref=cloudfront_no_kenesis"
   #resource_prefix     = "${var.project}-${terraform.workspace}"
   alarms = var.alarms
   domain_name = var.domain_name
