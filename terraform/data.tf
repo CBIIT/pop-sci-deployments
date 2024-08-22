@@ -53,7 +53,7 @@ data "aws_iam_policy_document" "s3_alb_policy" {
 }
 
 # S3 snapshot bucket
-data "aws_iam_policy_document" "s3bucket_policy" {
+/*data "aws_iam_policy_document" "s3bucket_policy" {
   count = terraform.workspace == "stage" ? 1 : 0
   statement {
     effect = "Allow"
@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "s3bucket_policy" {
       "arn:aws:s3:::${module.s3_ossnapshot[0].bucket_name}/*"
     ]
   }
-}
+}*/
 
 #Opensearch snapshot
 resource "aws_iam_role" "opensearch_snapshot_role" {
