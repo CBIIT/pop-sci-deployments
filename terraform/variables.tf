@@ -219,7 +219,7 @@ variable "secret_values" {
 }
 
 #CloudFront
-/*variable "create_cloudfront" {
+variable "create_cloudfront" {
   description = "create cloudfront or not"
   type = bool
   default = false
@@ -256,10 +256,10 @@ variable "target_account_cloudone"{
   description = "to add check conditions on whether the resources are brought up in cloudone or not"
   type        = bool
   default =   false
-}*/
+}
 
 #S3 for CloudFront
-/*variable "bucket_name" {
+variable "bucket_name" {
   description = "cloudfront s3 bucket name"
   type = string
   default = ""
@@ -270,8 +270,8 @@ variable "target_account_cloudone"{
   default = true
 }*/
 
-/*variable "s3_force_destroy" {
+variable "s3_force_destroy" {
   description = "force destroy bucket"
   default = true
   type = bool
-}*/
+}
