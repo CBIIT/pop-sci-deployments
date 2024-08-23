@@ -125,11 +125,10 @@ module "cloudfront" {
 
 #s3 for CloudFront Dedicated bucket
 module "s3" {
+  count = var.create_cloudfront ? 1 : 0
   source = "git::https://github.com/CBIIT/datacommons-devops.git//terraform/modules/s3?ref=v1.19"
-  resource_prefix     = "${var.project}-${terraform.workspace}"
+  resource_prefix     = local.s3_cloudfront_bucket_name
   bucket_name = var.bucket_name
-  #stack_name = var.stack_name
-  #create_bucket_acl = var.create_bucket_acl
   env = terraform.workspace
   tags = var.tags
   s3_force_destroy = var.s3_force_destroy

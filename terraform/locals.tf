@@ -37,7 +37,7 @@ locals {
   # S3
   #s3_snapshot_bucket_name = "popsci-opensearch-bucket"
   s3_neo4j_bucket_name    = "neo4j-data-dump"
-
+  s3_cloudfront_bucket_name    = terraform.workspace == "prod" || terraform.workspace == "stage" ? "popsci-prod" : "popsci-dev"
   # Secrets
   dynamic_secrets = {
     app = {
