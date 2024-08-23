@@ -112,7 +112,7 @@ module "cloudfront" {
   #resource_prefix     = "${var.project}-${terraform.workspace}"
   alarms = var.alarms
   domain_name = var.domain_name
-  cloudfront_distribution_bucket_name = module.s3.bucket_name
+  cloudfront_distribution_bucket_name = module.s3[0].bucket_name
   cloudfront_slack_channel_name =  var.cloudfront_slack_channel_name
   env = terraform.workspace
   stack_name = var.stack_name
