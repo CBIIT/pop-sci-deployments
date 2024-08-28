@@ -71,7 +71,7 @@ module "opensearch" {
   create_cloudwatch_log_policy  = var.create_cloudwatch_log_policy
   create_snapshot_role          = var.create_snapshot_role
   create_os_service_role        = var.create_os_service_role
-  #resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
+  resource_prefix               = "${var.program}-${terraform.workspace}-${var.project}"
 }
 
 # Secrets
