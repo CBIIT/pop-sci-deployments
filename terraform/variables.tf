@@ -143,7 +143,7 @@ variable "newrelic_s3_bucket" {
 }
 
 # Opensearch
-/*variable "automated_snapshot_start_hour" {
+variable "automated_snapshot_start_hour" {
   description = "hour when automated snapshot to be taken"
   type        = number
   default     = 23
@@ -191,7 +191,7 @@ variable "s3_opensearch_snapshot_bucket" {
   description = "name of the S3 Opensearch snapshot bucket created in prod account"
   sensitive   = false
 }
-*/
+
 
 # S3
 variable "alb_logging_account_id" {
