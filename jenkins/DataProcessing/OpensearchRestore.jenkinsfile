@@ -58,7 +58,6 @@ pipeline {
         checkout( poll: false, 
           changelog:false,
           scm: [$class: 'GitSCM', 
-          #branches: [[name: '*/main']], 
           branches: [[name: '*/cdk-update']], 
           doGenerateSubmoduleConfigurations: false, 
           extensions: [[$class: 'DisableRemotePoll'],
