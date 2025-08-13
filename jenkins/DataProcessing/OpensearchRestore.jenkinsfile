@@ -18,12 +18,12 @@ pipeline {
 	}
 
 	parameters {
-    extendedChoice( 
-        name: 'Environment', 
-        description: 'The environment to restore to.', 
-        defaultValue: 'dev', 
-        type: 'PT_SINGLE_SELECT',
-        value: 'dev,dev2,qa,qa2,cdk-update' )
+    //extendedChoice( 
+    //    name: 'Environment', 
+    //    description: 'The environment to restore to.', 
+    //    defaultValue: 'dev', 
+    //    type: 'PT_SINGLE_SELECT',
+    //    value: 'dev,dev2,qa,qa2,cdk-update' )
 
     string(name: 'SNAPSHOT_NAME',
         description: 'Snapshot name used for backup/restore operation.')
