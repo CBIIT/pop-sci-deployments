@@ -19,7 +19,7 @@ pipeline {
 
 	parameters {
     //extendedChoice( 
-    //    name: 'Environment', 
+    //    name: 'Environment-OLD', 
     //    description: 'The environment to restore to.', 
     //    defaultValue: 'dev', 
     //    type: 'PT_SINGLE_SELECT',
