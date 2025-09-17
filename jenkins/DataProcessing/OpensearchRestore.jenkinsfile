@@ -81,6 +81,12 @@ pipeline {
 				// set account number
 				env.AWS_ACCOUNT = sh(label: 'Get account number', returnStdout: true, script: "aws sts get-caller-identity --query \"Account\" --output text").trim()
 
+                if ($ENV == "stage" || $ENV == "prod"){
+					env.ROLE_ARN = "arn:aws:iam::${AWS_ACCOUNT}:role/crdc-stage-popsci-opensearch-snapshot"
+				}else {
+					env.ROLE_ARN = "arn:aws:iam::${AWS_ACCOUNT}:role/power-user-crdc-dev-popsci-opensearch-snapshot"
+				}
+
 			}
 
  		}
@@ -103,7 +109,7 @@ pipeline {
                 playbook: '${WORKSPACE}/pop-sci-deployments/ansible/playbooks/opensearchrestore.yml',
                 inventory: '${WORKSPACE}/pop-sci-deployments/ansible/playbooks/hosts',
                 extraVars: [
-                    role_arn: "arn:aws:iam::${AWS_ACCOUNT}:role/power-user-crdc-dev-popsci-opensearch-snapshot"
+                    role_arn: "${ROLE_ARN}"
                     ],
                   hostKeyChecking: false,
                   colorized: true)
