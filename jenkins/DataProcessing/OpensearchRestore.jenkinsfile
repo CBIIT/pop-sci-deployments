@@ -88,9 +88,18 @@ pipeline {
   	}
 
   	stage('opensearch_backup'){
- 		  steps{
-        wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]){
-             ansiblePlaybook( 
+
+		agent {
+            docker {
+                image 'cbiitssrepo/cicd-ansible_4.0'
+                args '--net=host -u root -v /var/run/docker.sock:/var/run/docker.sock'
+                reuseNode true
+            }
+        }
+
+		steps{
+        	wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "xterm"]){
+              ansiblePlaybook( 
                 playbook: '${WORKSPACE}/pop-sci-deployments/ansible/playbooks/opensearchrestore.yml',
                 inventory: '${WORKSPACE}/pop-sci-deployments/ansible/playbooks/hosts',
                 extraVars: [
@@ -98,8 +107,9 @@ pipeline {
                     ],
                   hostKeyChecking: false,
                   colorized: true)
+            }
         }
-      }
+
     }
   }
   post {
