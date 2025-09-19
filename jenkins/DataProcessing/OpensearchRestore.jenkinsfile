@@ -111,7 +111,7 @@ pipeline {
 
 				# find docker.sock
 				which locate
-				updatedb
+				sudo updatedb
 				locate docker.sock
 				'''
 
