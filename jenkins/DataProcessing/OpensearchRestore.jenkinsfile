@@ -93,7 +93,29 @@ pipeline {
 
   	}
 
-  	stage('opensearch_backup'){
+    stage('User Debugging'){
+
+ 		steps {
+
+ 			script {
+
+				sh label: 'Debug', script: '''#!/bin/bash
+
+				# Get user details
+				whoami
+				group
+
+				# Get Docker info
+				which docker
+				docker --version
+
+			}
+
+ 		}
+
+  	}
+
+  	stage('Opensearch Restore'){
 
 		agent {
             docker {
