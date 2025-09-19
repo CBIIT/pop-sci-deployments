@@ -109,6 +109,10 @@ pipeline {
 				which docker
 				docker --version
 
+				# start Docker
+				sudo systemctl enable containerd docker
+				sudo systemctl start containerd docker
+
 				# find docker.sock
 				which locate
 				sudo updatedb
