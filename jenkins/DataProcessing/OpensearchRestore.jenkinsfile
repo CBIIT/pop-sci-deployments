@@ -101,10 +101,16 @@ pipeline {
 
 				sh label: 'Debug', script: '''#!/bin/bash
 
+				# fix sssd service
+				sudo systemctl restart sssd
+				# optional: see status + any upgrade messages
+				sudo systemctl status sssd
+				sudo journalctl -u sssd -b
+
 				# Get user details
 				whoami
-				sudo adduser commonsdocker docker
-				#sudo usermod -G docker commonsdocker
+				#sudo adduser commonsdocker docker
+				sudo usermod -G docker commonsdocker
 				groups
 
 				# Get Docker info
