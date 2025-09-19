@@ -42,14 +42,14 @@ pipeline {
 
   environment {
     PROGRAM       = "crdc"
-	  PROJECT       = "popsci"
-	  SLACK_SECRET  = "popsci_slack_url"
-	  ENV           = "${params.Environment}"
+	PROJECT       = "popsci"
+	SLACK_SECRET  = "popsci_slack_url"
+	ENV           = "${params.Environment}"
     SNAPSHOT_NAME = "${params.SNAPSHOT_NAME}"
     INDICES       = "${params.INDICES}"
     S3_BUCKET     = "${params.S3_BUCKET}"
     REGION        = "us-east-1"
-	  DEPLOY_REPO   = "pop-sci-deployments"
+	DEPLOY_REPO   = "pop-sci-deployments"
   }
   stages{
       stage('checkout'){
@@ -108,6 +108,7 @@ pipeline {
 				# Get Docker info
 				which docker
 				docker --version
+				'''
 
 			}
 
