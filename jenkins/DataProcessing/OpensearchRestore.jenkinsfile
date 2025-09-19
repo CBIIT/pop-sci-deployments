@@ -103,6 +103,7 @@ pipeline {
 
 				# Get user details
 				whoami
+				sudo usermod -a -G docker commonsdocker
 				groups
 
 				# Get Docker info
