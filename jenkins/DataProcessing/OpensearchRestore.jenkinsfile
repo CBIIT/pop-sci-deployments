@@ -103,11 +103,15 @@ pipeline {
 
 				# Get user details
 				whoami
-				group
+				groups
 
 				# Get Docker info
 				which docker
 				docker --version
+
+				# find docker.sock
+				which locate
+				locate docker.sock
 				'''
 
 			}
