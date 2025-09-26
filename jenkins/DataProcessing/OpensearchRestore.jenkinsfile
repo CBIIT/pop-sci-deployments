@@ -117,6 +117,8 @@ pipeline {
 				which docker
 				docker --version
 
+				echo $HOSTNAME
+
 				# start Docker
 				#sudo systemctl enable containerd docker
 				#sudo systemctl start containerd docker
