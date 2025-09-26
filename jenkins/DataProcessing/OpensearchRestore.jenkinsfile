@@ -102,15 +102,15 @@ pipeline {
 				sh label: 'Debug', script: '''#!/bin/bash
 
 				# fix sssd service
-				sudo systemctl restart sssd
+				#sudo systemctl restart sssd
 				# optional: see status + any upgrade messages
-				sudo systemctl status sssd
-				sudo journalctl -u sssd -b
+				#sudo systemctl status sssd
+				#sudo journalctl -u sssd -b
 
 				# Get user details
 				whoami
 				#sudo adduser commonsdocker docker
-				sudo usermod -G docker commonsdocker
+				#sudo usermod -G docker commonsdocker
 				groups
 
 				# Get Docker info
@@ -118,13 +118,13 @@ pipeline {
 				docker --version
 
 				# start Docker
-				sudo systemctl enable containerd docker
-				sudo systemctl start containerd docker
+				#sudo systemctl enable containerd docker
+				#sudo systemctl start containerd docker
 
 				# find docker.sock
-				which locate
-				sudo updatedb
-				locate docker.sock
+				#which locate
+				#sudo updatedb
+				#locate docker.sock
 				'''
 
 			}
