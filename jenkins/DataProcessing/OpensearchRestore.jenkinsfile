@@ -82,53 +82,10 @@ pipeline {
 				env.AWS_ACCOUNT = sh(label: 'Get account number', returnStdout: true, script: "aws sts get-caller-identity --query \"Account\" --output text").trim()
 
                 if ( "${env.ENV}" == "stage" || "${env.ENV}" == "prod" ){
-					//env.ROLE_ARN = "arn:aws:iam::${AWS_ACCOUNT}:role/crdc-stage-popsci-opensearch-snapshot"
 					env.ROLE_ARN = "arn:aws:iam::${AWS_ACCOUNT}:role/power-user-crdc-stage-popsci-opensearch-snapshot"
 				}else {
 					env.ROLE_ARN = "arn:aws:iam::${AWS_ACCOUNT}:role/power-user-crdc-dev-popsci-opensearch-snapshot"
 				}
-
-			}
-
- 		}
-
-  	}
-
-    stage('User Debugging'){
-
- 		steps {
-
- 			script {
-
-				sh label: 'Debug', script: '''#!/bin/bash
-
-				# fix sssd service
-				#sudo systemctl restart sssd
-				# optional: see status + any upgrade messages
-				#sudo systemctl status sssd
-				#sudo journalctl -u sssd -b
-
-				# Get user details
-				whoami
-				#sudo adduser commonsdocker docker
-				#sudo usermod -G docker commonsdocker
-				groups
-
-				# Get Docker info
-				which docker
-				docker --version
-
-				echo $HOSTNAME
-
-				# start Docker
-				#sudo systemctl enable containerd docker
-				#sudo systemctl start containerd docker
-
-				# find docker.sock
-				#which locate
-				#sudo updatedb
-				#locate docker.sock
-				'''
 
 			}
 
